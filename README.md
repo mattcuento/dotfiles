@@ -116,6 +116,101 @@ Custom plugin with 5 specialized development agents:
 
 See `.claude/plugins/dev-suite/README.md` for complete documentation.
 
+### Tmux Configuration (`.tmux.conf` + `.tmux/`)
+
+**Versioned (Portable):**
+- Main configuration file (`.tmux.conf`)
+- TPM (Tmux Plugin Manager) - included as git submodule
+- Custom prefix key: `Ctrl-Space` (instead of default `Ctrl-b`)
+- Vi-style pane navigation (`h/j/k/l`)
+- Mouse support enabled
+- Catppuccin Mocha theme with status modules
+- Plugin declarations
+
+**Auto-Downloaded (Not Versioned):**
+- Plugins managed by TPM (catppuccin, tmux-sensible, vim-tmux-navigator)
+- Installed to `~/.tmux/plugins/` on first use
+
+#### First-Time Setup on New Machine
+
+**1. Clone with submodules:**
+```bash
+git clone --recurse-submodules <repo-url> ~/Development/dotfiles
+# TPM is automatically included!
+```
+
+**2. Create symlinks:**
+```bash
+cd ~/Development/dotfiles
+stow -t ~ .
+
+# Or manually:
+ln -s ~/Development/dotfiles/.tmux.conf ~/.tmux.conf
+ln -s ~/Development/dotfiles/.tmux ~/.tmux
+```
+
+**3. Start tmux:**
+```bash
+tmux
+```
+
+**4. Install plugins:**
+Press `Ctrl-Space + I` (that's capital I) inside tmux. TPM will automatically download:
+- Catppuccin theme (v2.1.3)
+- tmux-sensible (sensible defaults)
+- vim-tmux-navigator (seamless vim/tmux navigation)
+
+**5. Verify setup:**
+- Status bar should show Catppuccin Mocha theme
+- Try `Ctrl-Space + h/j/k/l` to navigate between panes
+- Mouse clicks should work for pane selection
+
+#### Key Bindings
+
+**Important:** This config uses `Ctrl-Space` as the prefix key (not the default `Ctrl-b`).
+
+| Keybinding | Action |
+|------------|--------|
+| `Ctrl-Space` | Prefix key (all commands start with this) |
+| `Ctrl-Space + r` | Reload tmux configuration |
+| `Ctrl-Space + h/j/k/l` | Navigate panes (left/down/up/right) |
+| `Ctrl-Space + c` | Create new window |
+| `Ctrl-Space + I` | Install/update plugins (capital I) |
+
+#### Troubleshooting
+
+**TPM not found:**
+```bash
+# Check if submodules were initialized
+ls ~/.tmux/plugins/tpm/
+
+# If missing, initialize submodules:
+cd ~/Development/dotfiles
+git submodule update --init --recursive
+```
+
+**Plugins not installing:**
+```bash
+# Ensure TPM is present, then inside tmux:
+# Press: Ctrl-Space + I (capital I)
+
+# If that doesn't work, source the config manually:
+tmux source ~/.tmux.conf
+# Then press: Ctrl-Space + I
+```
+
+**Theme not loading:**
+```bash
+# Kill tmux server and restart
+tmux kill-server
+tmux
+
+# Press: Ctrl-Space + I (to reinstall plugins)
+```
+
+**Wrong prefix key:**
+If you're pressing `Ctrl-b` and nothing happens, remember this config uses `Ctrl-Space`.
+
 ## Adding New Configs
 
 ### Adding Tool Configs
@@ -156,8 +251,9 @@ git commit -m "Add tmux configuration"
 ### Setup on New Machine
 
 ```bash
-# 1. Clone repository
-git clone <your-repo-url> ~/Development/dotfiles
+# 1. Clone repository with submodules
+git clone --recurse-submodules <your-repo-url> ~/Development/dotfiles
+# This includes TPM (Tmux Plugin Manager) automatically!
 
 # 2. Install dependencies (if needed)
 # - Claude CLI
@@ -171,8 +267,14 @@ stow -t ~ .
 # Or manually:
 ln -s ~/Development/dotfiles/.claude ~/.claude
 ln -s ~/Development/dotfiles/.config ~/.config
+ln -s ~/Development/dotfiles/.tmux.conf ~/.tmux.conf
+ln -s ~/Development/dotfiles/.tmux ~/.tmux
 
-# 4. First run
+# 4. Install tmux plugins (if using tmux)
+tmux
+# Press: Ctrl-Space + I (to install plugins)
+
+# 5. First run
 # Claude will create machine-specific files automatically
 # - settings.local.json
 # - Plugin cache (marketplace plugins downloaded)
@@ -186,6 +288,7 @@ Changes sync instantly since configs are symlinked:
 ```bash
 cd ~/Development/dotfiles
 git pull
+git submodule update --remote --merge  # Update submodules (TPM)
 # Changes are immediately available in ~/.claude, ~/.config, etc.
 ```
 

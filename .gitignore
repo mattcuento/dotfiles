@@ -100,3 +100,18 @@
 *~
 *.swp
 *.swo
+
+# ============================================
+# Tmux - Plugin and Runtime Data
+# ============================================
+
+# Tmux plugins (managed by TPM, re-downloadable)
+# Note: TPM itself is a submodule and is versioned
+.tmux/plugins/*
+!.tmux/plugins/tpm
+
+# Tmux resurrect/continuum data (session state)
+.tmux/resurrect/
+
+# Tmux server state
+.tmux/tmp/
