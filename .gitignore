@@ -1,0 +1,102 @@
+# Dotfiles Repository - .gitignore
+# This repository contains portable configuration files.
+# Machine-specific and transient files are excluded.
+
+# ============================================
+# Claude - Machine-Specific Settings
+# ============================================
+
+# Local settings override (machine-specific permissions)
+.claude/settings.local.json
+
+# ============================================
+# Claude - Session and History Data
+# ============================================
+
+# Command history (private)
+.claude/history.jsonl
+
+# Session-specific todos
+.claude/todos/
+
+# Temporary session plans
+.claude/plans/
+
+# Session environment
+.claude/session-env/
+
+# ============================================
+# Claude - Project-Specific Data
+# ============================================
+
+# Project-specific configurations (contain absolute paths)
+.claude/projects/
+
+# ============================================
+# Claude - Plugin Cache and Marketplace Data
+# ============================================
+
+# Downloaded plugin cache (re-downloadable)
+.claude/plugins/cache/
+
+# Installed plugins manifest (contains absolute paths)
+.claude/plugins/installed_plugins.json
+
+# Marketplace data (regeneratable)
+.claude/plugins/known_marketplaces.json
+.claude/plugins/marketplaces/
+
+# ============================================
+# Claude - Debug and Logs
+# ============================================
+
+# Debug logs
+.claude/debug/
+
+# ============================================
+# Claude - File and Edit History
+# ============================================
+
+# File edit history
+.claude/file-history/
+
+# Shell snapshots
+.claude/shell-snapshots/
+
+# ============================================
+# Claude - Cache and Analytics
+# ============================================
+
+# General cache
+.claude/cache/
+
+# Downloads directory
+.claude/downloads/
+
+# Stats cache
+.claude/stats-cache.json
+
+# Statsig analytics
+.claude/statsig/
+
+# Telemetry data
+.claude/telemetry/
+
+# ============================================
+# Claude - IDE Integration
+# ============================================
+
+# IDE lock files and integration data
+.claude/ide/
+
+# ============================================
+# System Files
+# ============================================
+
+# macOS system files
+.DS_Store
+
+# Editor backup files
+*~
+*.swp
+*.swo

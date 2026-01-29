@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Git status",
+      "Git log",
+      "WebFetch",
+      "Bash(ls:*)",
+      "Bash(cargo:fmt)",
+      "Bash(cargo:fmt:*)",
+      "Bash(go:fmt)",
+      "Bash(go:fmt:*)",
+      "Bash(gofmt:*)",
+      "Bash(mvn:spotless:apply)",
+      "Bash(mvn:spotless:apply:*)",
+      "Bash(mvn:checkstyle:*)",
+      "Bash(checkstyle:*)",
+      "Bash(grep:*)",
+      "Write(*)"
+    ]
+  },
+  "enabledPlugins": {
+    "dev-suite": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "jdtls-lsp@claude-plugins-official": true
+  },
+  "model": "sonnet"
+}

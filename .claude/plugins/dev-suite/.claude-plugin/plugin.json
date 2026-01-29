@@ -1,0 +1,8 @@
+{
+  "name": "dev-suite",
+  "description": "Comprehensive development suite with specialized agents for system architecture, feature planning, TDD implementation, QA testing, and code review aligned with SOLID principles and minimal code philosophy",
+  "author": {
+    "name": "mcuento",
+    "email": "user@example.com"
+  }
+}
