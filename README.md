@@ -20,6 +20,8 @@ dotfiles/
 │   │   └── hosts.yml      # GitHub username and host config
 │   ├── git/
 │   │   └── ignore         # Global gitignore patterns
+│   ├── iterm2/            # iTerm2 preferences
+│   │   └── com.googlecode.iterm2.plist
 │   └── nvim/              # Neovim configuration
 │       ├── init.lua       # Main config file
 │       ├── lazy-lock.json # Plugin lockfile
@@ -518,6 +520,51 @@ vim # Should open neovim
 - **zsh-syntax-highlighting**: Install via Oh My Zsh or homebrew
 - **ASDF**: Version manager for multiple languages
 
+### iTerm2 Configuration (`.config/iterm2/`)
+
+**What's included:**
+
+iTerm2 preferences including color schemes, fonts, key bindings, profiles, and window settings.
+
+**Versioned (Portable):**
+
+- `com.googlecode.iterm2.plist` - Complete iTerm2 preferences
+
+**Setup on new machine:**
+
+1. **Clone dotfiles** (if not already done)
+
+2. **Configure iTerm2 to load from dotfiles:**
+
+```bash
+# Tell iTerm2 where to find preferences
+defaults write com.googlecode.iterm2 PrefsCustomFolder -string "~/Development/dotfiles/.config/iterm2"
+defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
+```
+
+3. **Restart iTerm2:**
+
+Close and reopen iTerm2 for settings to take effect.
+
+4. **Verify settings loaded:**
+
+Open iTerm2 → Preferences → General → Preferences
+Should show: "Load preferences from a custom folder or URL"
+Path: `~/Development/dotfiles/.config/iterm2`
+
+**Making changes:**
+
+Any preference changes in iTerm2 will automatically save to the dotfiles folder. Commit and push to sync across machines:
+
+```bash
+cd ~/Development/dotfiles
+git add .config/iterm2/
+git commit -m "Update iTerm2 preferences"
+git push
+```
+
+**Note:** Changes require iTerm2 to be restarted to take effect on other machines after pulling updates.
+
 ## Adding New Configs
 
 ### Adding Tool Configs
@@ -553,6 +600,7 @@ git commit -m "Add tmux configuration"
 | Git                 | `~/.gitconfig`              | `.gitconfig`            |
 | Git (global ignore) | `~/.config/git/`            | `.config/git/`          |
 | Neovim              | `~/.config/nvim/`           | `.config/nvim/`         |
+| iTerm2              | `~/.config/iterm2/`         | `.config/iterm2/`       |
 | tmux                | `~/.tmux.conf` + `~/.tmux/` | `.tmux.conf` + `.tmux/` |
 | Zsh                 | `~/.zshrc` + `~/.zsh/`      | `.zshrc` + `.zsh/`      |
 | Alacritty           | `~/.config/alacritty/`      | `.config/alacritty/`    |
