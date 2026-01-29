@@ -20,6 +20,7 @@ ZSH_THEME="robbyrussell"
 # Plugins (must be defined before sourcing oh-my-zsh.sh)
 plugins=(
     git
+    zsh-autosuggestions
     zsh-syntax-highlighting
 )
 
@@ -51,7 +52,7 @@ source $ZSH/oh-my-zsh.sh
 # ============================================
 # Uncomment if using these plugins
 # source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
-# source $(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+source $(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
 # ============================================
 # Optional: Auto-start tmux
