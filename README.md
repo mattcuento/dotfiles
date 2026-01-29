@@ -27,9 +27,18 @@ dotfiles/
 │           ├── vim-options.lua
 │           └── plugins/   # Plugin configurations
 ├── .tmux.conf              # → ~/.tmux.conf
-└── .tmux/                  # → ~/.tmux/
-    └── plugins/
-        └── tpm/           # Tmux Plugin Manager (submodule)
+├── .tmux/                  # → ~/.tmux/
+│   └── plugins/
+│       └── tpm/           # Tmux Plugin Manager (submodule)
+├── .zshrc                  # → ~/.zshrc (main zsh config)
+└── .zsh/                   # → ~/.zsh/ (modular zsh configs)
+    ├── env.zsh            # Environment variables
+    ├── path.zsh           # PATH modifications
+    ├── aliases.zsh        # Shell aliases
+    ├── functions.zsh      # Custom functions
+    └── sensitive.zsh.example  # Template for ~/.zsh_sensitive
+
+Note: Sensitive data goes in ~/.zsh_sensitive (home root, not tracked)
 ```
 
 **Mapping**: The directory structure mirrors your home directory exactly.
@@ -39,6 +48,8 @@ dotfiles/
 - `dotfiles/.gitconfig` → `~/.gitconfig`
 - `dotfiles/.tmux.conf` → `~/.tmux.conf`
 - `dotfiles/.tmux/` → `~/.tmux/`
+- `dotfiles/.zshrc` → `~/.zshrc`
+- `dotfiles/.zsh/` → `~/.zsh/`
 
 ## Quick Setup
 
@@ -405,6 +416,108 @@ gh config list
 
 Edit `.config/gh/config.yml` to add your own aliases or change preferences. Changes sync via git to all machines.
 
+### Zsh Configuration (`.zshrc` + `.zsh/`)
+
+**Modular structure for maintainability:**
+
+The Zsh configuration is split into logical modules for easy management:
+
+```
+.zshrc                         # Main config, sources all modules
+.zsh/
+  ├── env.zsh                 # Environment variables (ANDROID_HOME, etc.)
+  ├── path.zsh                # PATH modifications
+  ├── aliases.zsh             # Command aliases
+  ├── functions.zsh           # Custom shell functions
+  └── sensitive.zsh.example   # Template for ~/.zsh_sensitive
+
+~/.zsh_sensitive               # Your actual secrets (NOT in repo, not symlinked)
+```
+
+**Versioned (Portable):**
+
+- `.zshrc` - Main configuration file
+- `.zsh/env.zsh` - Environment variables (Android, Java, etc.)
+- `.zsh/path.zsh` - PATH modifications
+- `.zsh/aliases.zsh` - Shell aliases (git shortcuts, vim → nvim)
+- `.zsh/functions.zsh` - Custom functions (blog post helpers)
+
+**Not versioned (Sensitive):**
+
+- `~/.zsh_sensitive` - Machine-specific secrets (OAuth tokens, API keys)
+  - **Location**: `~/.zsh_sensitive` (in HOME root, NOT in `.zsh/` directory)
+  - **Not symlinked**: Created directly in home directory, never tracked by git
+- `.zsh_history` - Command history
+- `.zsh_sessions/` - Session state
+
+**What's included:**
+
+- **Oh My Zsh** integration with robbyrussell theme
+- **ASDF** version manager initialization
+- **Git aliases**: `gs` (status), `gc` (commit), `gp` (push), etc.
+- **Android/Java** development environment setup
+- **Blog functions**: `post` and `blist` for cuento-blog management
+- **Modular loading**: Each module can be enabled/disabled independently
+
+**Setup on new machine:**
+
+1. **Create symlinks:**
+
+```bash
+ln -s ~/Development/dotfiles/.zshrc ~/.zshrc
+ln -s ~/Development/dotfiles/.zsh ~/.zsh
+```
+
+2. **Create sensitive file (in HOME, not in repo):**
+
+```bash
+# Copy template to HOME directory (NOT in .zsh/)
+cp ~/.zsh/sensitive.zsh.example ~/.zsh_sensitive
+
+# Edit and add your actual tokens
+vim ~/.zsh_sensitive
+```
+
+3. **Add your tokens:**
+
+```bash
+# Inside ~/.zsh_sensitive (in home root, not versioned)
+export CLAUDE_CODE_OAUTH_TOKEN="your-actual-token-here"
+export API_KEY="your-key-here"
+# etc.
+```
+
+**Important**: `~/.zsh_sensitive` is created in your HOME directory root, NOT inside the `.zsh/` directory. This keeps it outside the repo and prevents accidental commits.
+
+4. **Reload shell:**
+
+```bash
+source ~/.zshrc
+# Or use the alias: src
+```
+
+**Verify setup:**
+
+```bash
+echo $CLAUDE_CODE_OAUTH_TOKEN  # Should show your token
+gs  # Should run git status
+vim # Should open neovim
+```
+
+**Adding new configuration:**
+
+- **Aliases**: Edit `.zsh/aliases.zsh`
+- **Functions**: Edit `.zsh/functions.zsh`
+- **Environment vars**: Edit `.zsh/env.zsh`
+- **PATH changes**: Edit `.zsh/path.zsh`
+- **Secrets**: Edit `~/.zsh_sensitive` (in home root, not versioned)
+
+**Dependencies:**
+
+- **Oh My Zsh**: Install from [ohmyz.sh](https://ohmyz.sh/)
+- **zsh-syntax-highlighting**: Install via Oh My Zsh or homebrew
+- **ASDF**: Version manager for multiple languages
+
 ## Adding New Configs
 
 ### Adding Tool Configs
@@ -434,15 +547,15 @@ git commit -m "Add tmux configuration"
 
 ### Examples
 
-| Tool                | Home Location          | Dotfiles Location    |
-| ------------------- | ---------------------- | -------------------- |
-| Claude              | `~/.claude/`           | `.claude/`           |
-| Git                 | `~/.gitconfig`         | `.gitconfig`         |
-| Git (global ignore) | `~/.config/git/`       | `.config/git/`       |
-| Neovim              | `~/.config/nvim/`      | `.config/nvim/`      |
-| tmux                | `~/.tmux.conf`         | `.tmux.conf`         |
-| Alacritty           | `~/.config/alacritty/` | `.config/alacritty/` |
-| Zsh                 | `~/.zshrc`             | `.zshrc`             |
+| Tool                | Home Location               | Dotfiles Location       |
+| ------------------- | --------------------------- | ----------------------- |
+| Claude              | `~/.claude/`                | `.claude/`              |
+| Git                 | `~/.gitconfig`              | `.gitconfig`            |
+| Git (global ignore) | `~/.config/git/`            | `.config/git/`          |
+| Neovim              | `~/.config/nvim/`           | `.config/nvim/`         |
+| tmux                | `~/.tmux.conf` + `~/.tmux/` | `.tmux.conf` + `.tmux/` |
+| Zsh                 | `~/.zshrc` + `~/.zsh/`      | `.zshrc` + `.zsh/`      |
+| Alacritty           | `~/.config/alacritty/`      | `.config/alacritty/`    |
 
 ## Syncing Across Machines
 

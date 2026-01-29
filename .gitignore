@@ -125,3 +125,23 @@
 
 # Lazy.nvim plugin data is stored in ~/.local/share/nvim/lazy/
 # (outside config directory, so no gitignore needed here)
+
+# ============================================
+# Zsh - Sensitive Data and History
+# ============================================
+
+# NOTE: Sensitive data is stored in ~/.zsh_sensitive (in home root),
+# which is outside this repo, so it's automatically not tracked.
+# The patterns below are defensive in case files end up in wrong location.
+
+# Zsh history (contains command history with potential secrets)
+.zsh_history
+*/.zsh_history
+
+# Zsh sessions (contains session state)
+.zsh_sessions/
+*/.zsh_sessions/
+
+# Defensive: Block any sensitive.zsh files
+*sensitive.zsh
+!*sensitive.zsh.example

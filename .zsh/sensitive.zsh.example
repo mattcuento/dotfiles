@@ -1,0 +1,17 @@
+# Sensitive Environment Variables
+#
+# This file is a TEMPLATE for machine-specific secrets and tokens.
+# Copy this to ~/.zsh_sensitive (in your HOME directory, not in .zsh/)
+# and add your actual values.
+#
+# IMPORTANT: ~/.zsh_sensitive is NOT in the repo or symlinked.
+# It stays in your home directory and is never committed to git.
+
+# Claude Code OAuth Token
+# Get this from: https://claude.ai/settings
+export CLAUDE_CODE_OAUTH_TOKEN="your-token-here"
+
+# Add other sensitive environment variables here
+# export API_KEY="your-key-here"
+# export DATABASE_PASSWORD="your-password-here"
+# export AWS_SECRET_ACCESS_KEY="your-secret-here"
