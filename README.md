@@ -15,6 +15,9 @@ dotfiles/
 │   └── plugins/
 │       └── dev-suite/     # Custom development plugin
 ├── .config/                # → ~/.config/
+│   ├── gh/                # GitHub CLI configuration
+│   │   ├── config.yml     # Global preferences and aliases
+│   │   └── hosts.yml      # GitHub username and host config
 │   ├── git/
 │   │   └── ignore         # Global gitignore patterns
 │   └── nvim/              # Neovim configuration
@@ -355,6 +358,52 @@ These tools enhance the Neovim experience but aren't required:
 - **GitHub Copilot** - Requires GitHub Copilot subscription and separate setup
 
 **Note:** Neovim will show warnings if optional tools are missing but will function normally otherwise.
+
+### GitHub CLI Configuration (`.config/gh/`)
+
+**Versioned (Portable):**
+
+- `config.yml` - Global preferences (git protocol, editor, aliases)
+- `hosts.yml` - GitHub hostname and username configuration
+
+**What's included:**
+
+- Git protocol preference: `https`
+- Prompt settings
+- Alias: `co` → `pr checkout`
+- GitHub username
+
+**Not versioned (Secure):**
+
+- OAuth tokens are stored in system keychain (not in config files)
+- Auth state is machine-specific
+
+**Setup on new machine:**
+
+1. **Create symlink:**
+
+```bash
+ln -s ~/Development/dotfiles/.config/gh ~/.config/gh
+```
+
+2. **Authenticate:**
+
+```bash
+gh auth login
+```
+
+Follow the prompts to authenticate. Your preferences from the config will be used, but you'll need to auth separately on each machine.
+
+3. **Verify setup:**
+
+```bash
+gh auth status
+gh config list
+```
+
+**Customization:**
+
+Edit `.config/gh/config.yml` to add your own aliases or change preferences. Changes sync via git to all machines.
 
 ## Adding New Configs
 
