@@ -43,6 +43,9 @@ source $ZSH/oh-my-zsh.sh
 # Functions
 [[ -f ~/.zsh/functions.zsh ]] && source ~/.zsh/functions.zsh
 
+# fzf configuration
+[[ -f ~/.zsh/fzf.zsh ]] && source ~/.zsh/fzf.zsh
+
 # Sensitive data (tokens, secrets) - stored in HOME, not in repo
 # Create ~/.zsh_sensitive with your tokens (see .zsh/sensitive.zsh.example)
 [[ -f ~/.zsh_sensitive ]] && source ~/.zsh_sensitive

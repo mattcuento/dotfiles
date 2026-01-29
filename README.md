@@ -38,6 +38,7 @@ dotfiles/
     ├── path.zsh           # PATH modifications
     ├── aliases.zsh        # Shell aliases
     ├── functions.zsh      # Custom functions
+    ├── fzf.zsh            # fzf configuration and key bindings
     └── sensitive.zsh.example  # Template for ~/.zsh_sensitive
 
 Note: Sensitive data goes in ~/.zsh_sensitive (home root, not tracked)
@@ -564,6 +565,73 @@ git push
 ```
 
 **Note:** Changes require iTerm2 to be restarted to take effect on other machines after pulling updates.
+
+### fzf Configuration (`.zsh/fzf.zsh`)
+
+**What's included:**
+
+Command-line fuzzy finder with shell integration, custom key bindings, and helper functions.
+
+**Versioned (Portable):**
+
+- `.zsh/fzf.zsh` - Complete fzf configuration including:
+  - Shell integration (key bindings and completions)
+  - Custom color scheme and layout
+  - File/directory preview with syntax highlighting
+  - Git integration functions
+  - Process management helpers
+
+**Setup on new machine:**
+
+1. **Install fzf and dependencies:**
+
+```bash
+brew install fzf bat fd tree
+```
+
+2. **Reload shell:**
+
+```bash
+source ~/.zshrc
+# or open a new terminal
+```
+
+**Key bindings:**
+
+- **Ctrl+R**: Search command history with preview
+- **Ctrl+T**: Search files with syntax-highlighted preview
+- **Alt+C**: Search directories with tree preview
+- **Ctrl+/**: Toggle preview window
+- **Ctrl+U/D**: Scroll preview half-page up/down
+
+**Custom functions:**
+
+- `fgb` (fzf-git-branch): Checkout git branch with commit preview
+- `fgc` (fzf-git-commit-show): Browse and view git commits
+- `fkill` (fzf-kill): Kill processes interactively
+
+**Dependencies:**
+
+- **fzf**: Core fuzzy finder
+- **bat**: Syntax-highlighted file previews (optional but recommended)
+- **fd**: Fast file searching (optional, fallback to `find`)
+- **tree**: Directory tree previews (optional, fallback to basic listing)
+
+**Usage examples:**
+
+```bash
+# Search files and open in editor
+vim $(fzf)
+
+# Search and checkout git branch
+fgb
+
+# Browse git commit history
+fgc
+
+# Kill a process interactively
+fkill
+```
 
 ## Adding New Configs
 
