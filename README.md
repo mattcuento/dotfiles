@@ -7,19 +7,29 @@ Personal configuration files using the mirror home directory pattern. This repos
 ```
 dotfiles/
 ├── .gitignore              # Excludes machine-specific/transient files
+├── .gitconfig              # → ~/.gitconfig (git user identity)
 ├── README.md               # This file
 ├── .claude/                # → ~/.claude/
 │   ├── CLAUDE.md          # User preferences and guidelines
 │   ├── settings.json      # Global settings
 │   └── plugins/
 │       └── dev-suite/     # Custom development plugin
-└── .config/                # → ~/.config/ (ready for nvim, etc.)
+├── .config/                # → ~/.config/
+│   └── git/
+│       └── ignore         # Global gitignore patterns
+├── .tmux.conf              # → ~/.tmux.conf
+└── .tmux/                  # → ~/.tmux/
+    └── plugins/
+        └── tpm/           # Tmux Plugin Manager (submodule)
 ```
 
 **Mapping**: The directory structure mirrors your home directory exactly.
+
 - `dotfiles/.claude/` → `~/.claude/`
-- `dotfiles/.config/nvim/` → `~/.config/nvim/` (when added)
-- `dotfiles/.tmux.conf` → `~/.tmux.conf` (when added)
+- `dotfiles/.config/git/` → `~/.config/git/`
+- `dotfiles/.gitconfig` → `~/.gitconfig`
+- `dotfiles/.tmux.conf` → `~/.tmux.conf`
+- `dotfiles/.tmux/` → `~/.tmux/`
 
 ## Quick Setup
 
@@ -44,6 +54,7 @@ stow -t ~ .
 ```
 
 **What stow does:**
+
 - Creates `~/.claude` → `~/Development/dotfiles/.claude`
 - Creates `~/.config` → `~/Development/dotfiles/.config`
 - Handles all nested files and directories automatically
@@ -85,11 +96,13 @@ claude --version
 ### Claude Configuration (`.claude/`)
 
 **Versioned (Portable):**
+
 - `CLAUDE.md` - Personal preferences and development guidelines
 - `settings.json` - Global settings (permissions, plugins, model)
 - `plugins/dev-suite/` - Custom local plugin with 5 specialized agents
 
 **Ignored (Machine-Specific):**
+
 - `settings.local.json` - Machine-specific overrides
 - `history.jsonl` - Command history
 - `projects/` - Project data with absolute paths
@@ -109,6 +122,7 @@ Custom plugin with 5 specialized development agents:
 5. **code-reviewer** (Red, Sonnet) - Quality review and SOLID compliance
 
 **Usage:**
+
 ```bash
 /dev-suite:dev-workflow    # Complete development lifecycle
 /dev-suite:design-review   # Architecture and design review
@@ -119,6 +133,7 @@ See `.claude/plugins/dev-suite/README.md` for complete documentation.
 ### Tmux Configuration (`.tmux.conf` + `.tmux/`)
 
 **Versioned (Portable):**
+
 - Main configuration file (`.tmux.conf`)
 - TPM (Tmux Plugin Manager) - included as git submodule
 - Custom prefix key: `Ctrl-Space` (instead of default `Ctrl-b`)
@@ -128,18 +143,21 @@ See `.claude/plugins/dev-suite/README.md` for complete documentation.
 - Plugin declarations
 
 **Auto-Downloaded (Not Versioned):**
+
 - Plugins managed by TPM (catppuccin, tmux-sensible, vim-tmux-navigator)
 - Installed to `~/.tmux/plugins/` on first use
 
 #### First-Time Setup on New Machine
 
 **1. Clone with submodules:**
+
 ```bash
 git clone --recurse-submodules <repo-url> ~/Development/dotfiles
 # TPM is automatically included!
 ```
 
 **2. Create symlinks:**
+
 ```bash
 cd ~/Development/dotfiles
 stow -t ~ .
@@ -150,17 +168,20 @@ ln -s ~/Development/dotfiles/.tmux ~/.tmux
 ```
 
 **3. Start tmux:**
+
 ```bash
 tmux
 ```
 
 **4. Install plugins:**
 Press `Ctrl-Space + I` (that's capital I) inside tmux. TPM will automatically download:
+
 - Catppuccin theme (v2.1.3)
 - tmux-sensible (sensible defaults)
 - vim-tmux-navigator (seamless vim/tmux navigation)
 
 **5. Verify setup:**
+
 - Status bar should show Catppuccin Mocha theme
 - Try `Ctrl-Space + h/j/k/l` to navigate between panes
 - Mouse clicks should work for pane selection
@@ -169,17 +190,18 @@ Press `Ctrl-Space + I` (that's capital I) inside tmux. TPM will automatically do
 
 **Important:** This config uses `Ctrl-Space` as the prefix key (not the default `Ctrl-b`).
 
-| Keybinding | Action |
-|------------|--------|
-| `Ctrl-Space` | Prefix key (all commands start with this) |
-| `Ctrl-Space + r` | Reload tmux configuration |
-| `Ctrl-Space + h/j/k/l` | Navigate panes (left/down/up/right) |
-| `Ctrl-Space + c` | Create new window |
-| `Ctrl-Space + I` | Install/update plugins (capital I) |
+| Keybinding             | Action                                    |
+| ---------------------- | ----------------------------------------- |
+| `Ctrl-Space`           | Prefix key (all commands start with this) |
+| `Ctrl-Space + r`       | Reload tmux configuration                 |
+| `Ctrl-Space + h/j/k/l` | Navigate panes (left/down/up/right)       |
+| `Ctrl-Space + c`       | Create new window                         |
+| `Ctrl-Space + I`       | Install/update plugins (capital I)        |
 
 #### Troubleshooting
 
 **TPM not found:**
+
 ```bash
 # Check if submodules were initialized
 ls ~/.tmux/plugins/tpm/
@@ -190,6 +212,7 @@ git submodule update --init --recursive
 ```
 
 **Plugins not installing:**
+
 ```bash
 # Ensure TPM is present, then inside tmux:
 # Press: Ctrl-Space + I (capital I)
@@ -200,6 +223,7 @@ tmux source ~/.tmux.conf
 ```
 
 **Theme not loading:**
+
 ```bash
 # Kill tmux server and restart
 tmux kill-server
@@ -211,6 +235,35 @@ tmux
 **Wrong prefix key:**
 If you're pressing `Ctrl-b` and nothing happens, remember this config uses `Ctrl-Space`.
 
+### Git Configuration (`.gitconfig` + `.config/git/`)
+
+**Versioned (Portable):**
+
+- `.gitconfig` - User identity (name and email)
+- `.config/git/ignore` - Global gitignore patterns
+
+**What's included:**
+
+- User name and email configuration
+- Global gitignore for `.claude/settings.local.json`
+
+**Setup on new machine:**
+The symlinks created by stow or manual linking will automatically configure git with your identity and global ignores.
+
+**Verify setup:**
+
+```bash
+git config --global user.name
+git config --global user.email
+```
+
+**Note:** If you need machine-specific git config, you can create `~/.gitconfig.local` and include it in your main `.gitconfig`:
+
+```ini
+[include]
+    path = ~/.gitconfig.local
+```
+
 ## Adding New Configs
 
 ### Adding Tool Configs
@@ -218,6 +271,7 @@ If you're pressing `Ctrl-b` and nothing happens, remember this config uses `Ctrl
 The mirror pattern makes adding configs simple:
 
 **For XDG-compliant tools** (nvim, alacritty, etc.):
+
 ```bash
 cd ~/Development/dotfiles
 mkdir -p .config/nvim
@@ -227,6 +281,7 @@ git commit -m "Add nvim configuration"
 ```
 
 **For traditional dotfiles** (tmux, bash, etc.):
+
 ```bash
 cd ~/Development/dotfiles
 cp ~/.tmux.conf .tmux.conf
@@ -238,13 +293,15 @@ git commit -m "Add tmux configuration"
 
 ### Examples
 
-| Tool | Home Location | Dotfiles Location |
-|------|---------------|-------------------|
-| Claude | `~/.claude/` | `.claude/` |
-| Neovim | `~/.config/nvim/` | `.config/nvim/` |
-| tmux | `~/.tmux.conf` | `.tmux.conf` |
-| Alacritty | `~/.config/alacritty/` | `.config/alacritty/` |
-| Zsh | `~/.zshrc` | `.zshrc` |
+| Tool                | Home Location          | Dotfiles Location    |
+| ------------------- | ---------------------- | -------------------- |
+| Claude              | `~/.claude/`           | `.claude/`           |
+| Git                 | `~/.gitconfig`         | `.gitconfig`         |
+| Git (global ignore) | `~/.config/git/`       | `.config/git/`       |
+| Neovim              | `~/.config/nvim/`      | `.config/nvim/`      |
+| tmux                | `~/.tmux.conf`         | `.tmux.conf`         |
+| Alacritty           | `~/.config/alacritty/` | `.config/alacritty/` |
+| Zsh                 | `~/.zshrc`             | `.zshrc`             |
 
 ## Syncing Across Machines
 
@@ -316,9 +373,7 @@ Create `~/.claude/settings.local.json` for machine-specific settings:
 ```json
 {
   "permissions": {
-    "allow": [
-      "Bash(custom-tool:*)"
-    ]
+    "allow": ["Bash(custom-tool:*)"]
   }
 }
 ```
@@ -391,12 +446,14 @@ stow -n -v -t ~ .
 ### Symlinks Not Working
 
 **Check if symlink exists:**
+
 ```bash
 ls -la ~/.claude
 # Should show: .claude -> /Users/you/Development/dotfiles/.claude
 ```
 
 **Fix broken symlink:**
+
 ```bash
 rm ~/.claude
 ln -s ~/Development/dotfiles/.claude ~/.claude
@@ -405,6 +462,7 @@ ln -s ~/Development/dotfiles/.claude ~/.claude
 ### Stow Conflicts
 
 **Error: "existing target is not owned by stow"**
+
 ```bash
 # Backup existing file
 mv ~/.claude ~/.claude.backup
@@ -416,11 +474,13 @@ stow -t ~ .
 ### Claude Plugin Not Loading
 
 **Check plugin enabled:**
+
 ```bash
 cat ~/.claude/settings.json | jq .enabledPlugins
 ```
 
 **Restart Claude:**
+
 ```bash
 # Exit and restart claude
 ```
@@ -430,6 +490,7 @@ cat ~/.claude/settings.json | jq .enabledPlugins
 **Problem**: Files appear in `git status` that should be ignored.
 
 **Solution**: Ensure `.gitignore` is committed and patterns are correct:
+
 ```bash
 git check-ignore -v <file-path>
 # Shows which gitignore rule matches (or doesn't)
@@ -463,6 +524,7 @@ git check-ignore -v <file-path>
 ## Next Steps
 
 1. **Add Git Remote** (if you haven't):
+
    ```bash
    cd ~/Development/dotfiles
    git remote add origin <your-remote-url>
