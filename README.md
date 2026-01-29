@@ -15,8 +15,14 @@ dotfiles/
 │   └── plugins/
 │       └── dev-suite/     # Custom development plugin
 ├── .config/                # → ~/.config/
-│   └── git/
-│       └── ignore         # Global gitignore patterns
+│   ├── git/
+│   │   └── ignore         # Global gitignore patterns
+│   └── nvim/              # Neovim configuration
+│       ├── init.lua       # Main config file
+│       ├── lazy-lock.json # Plugin lockfile
+│       └── lua/
+│           ├── vim-options.lua
+│           └── plugins/   # Plugin configurations
 ├── .tmux.conf              # → ~/.tmux.conf
 └── .tmux/                  # → ~/.tmux/
     └── plugins/
@@ -263,6 +269,92 @@ git config --global user.email
 [include]
     path = ~/.gitconfig.local
 ```
+
+### Neovim Configuration (`.config/nvim/`)
+
+**Versioned (Portable):**
+
+- `init.lua` - Main configuration with lazy.nvim bootstrap
+- `lua/vim-options.lua` - Core vim settings (tabs, navigation, line numbers)
+- `lua/plugins/*.lua` - Plugin configurations
+- `lazy-lock.json` - Plugin version lockfile
+- `.luarc.json` - Lua language server configuration
+
+**Plugin Manager:**
+
+- **lazy.nvim** - Modern plugin manager with lazy loading
+- Automatically bootstraps itself on first run (no manual installation needed)
+- Plugins are declared in `lua/plugins/*.lua` files
+
+**Included Plugins:**
+
+- **catppuccin** - Catppuccin color scheme
+- **nvim-lspconfig** - LSP configurations
+- **nvim-cmp** - Autocompletion
+- **telescope** - Fuzzy finder
+- **treesitter** - Syntax highlighting and parsing
+- **neo-tree** - File explorer
+- **copilot** - GitHub Copilot integration (via vim-plug/pack)
+- **lualine** - Status line
+- **none-ls** - Formatting and linting
+- **nvim-java** - Java language support
+- **vim-test** - Test runner integration
+
+**Auto-Downloaded (Not Versioned):**
+
+- Plugin data stored in `~/.local/share/nvim/lazy/`
+- Native vim packages in `.config/nvim/pack/` (like Copilot)
+- Both are gitignored and auto-installed on first run
+
+**Setup on new machine:**
+
+1. **Create symlink:**
+
+```bash
+ln -s ~/Development/dotfiles/.config/nvim ~/.config/nvim
+```
+
+2. **Open Neovim:**
+
+```bash
+nvim
+```
+
+3. **Plugins auto-install:**
+   Lazy.nvim will automatically bootstrap and install all plugins on first run. Just wait for the installation to complete.
+
+4. **Verify setup:**
+
+- Catppuccin colorscheme should be active
+- LSP should work for your languages
+- `:Lazy` command opens the plugin manager UI
+
+**Key Bindings:**
+
+- `<Space>` - Leader key
+- `<Ctrl-h/j/k/l>` - Navigate between vim panes
+- `<Space>ff` - Telescope find files
+- `<Space>fg` - Telescope live grep
+- `<Leader>gf` - Format current file with LSP/null-ls
+
+**Optional Dependencies:**
+
+These tools enhance the Neovim experience but aren't required:
+
+- **stylua** - Lua code formatter (for none-ls)
+
+  ```bash
+  # macOS
+  brew install stylua
+
+  # Or via cargo
+  cargo install stylua
+  ```
+
+- **Language servers** - Install LSPs for your languages (handled by nvim-lspconfig)
+- **GitHub Copilot** - Requires GitHub Copilot subscription and separate setup
+
+**Note:** Neovim will show warnings if optional tools are missing but will function normally otherwise.
 
 ## Adding New Configs
 

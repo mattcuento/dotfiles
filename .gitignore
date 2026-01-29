@@ -115,3 +115,13 @@
 
 # Tmux server state
 .tmux/tmp/
+
+# ============================================
+# Neovim - Plugin and Runtime Data
+# ============================================
+
+# Vim/Neovim native package management (downloaded plugins)
+.config/nvim/pack/
+
+# Lazy.nvim plugin data is stored in ~/.local/share/nvim/lazy/
+# (outside config directory, so no gitignore needed here)
