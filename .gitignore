@@ -3,91 +3,51 @@
 # Machine-specific and transient files are excluded.
 
 # ============================================
-# Claude - Machine-Specific Settings
+# Claude Code - Allowlist Strategy
+# ============================================
+# STRATEGY: Ignore everything in .claude/ by default, then explicitly
+# allow only configuration files. This prevents accidentally committing
+# any new runtime/session data that Claude Code might create.
+#
+# TRACKED (explicitly allowed):
+#   - CLAUDE.md (user preferences)
+#   - settings.json (shared settings)
+#   - skills/ (custom skills only)
+#   - plugins/ directories (future custom plugins)
+#
+# IGNORED (everything else):
+#   - All runtime data (history, plans, debug, etc.)
+#   - All session data (todos, session-env, etc.)
+#   - All cache/marketplace/installed plugins metadata
+#   - Machine-specific settings (settings.local.json)
 # ============================================
 
-# Local settings override (machine-specific permissions)
-.claude/settings.local.json
+# Ignore everything in .claude/ by default
+.claude/*
 
-# ============================================
-# Claude - Session and History Data
-# ============================================
+# Explicitly allow configuration files
+!.claude/CLAUDE.md
+!.claude/settings.json
+# Ignore setup script (one-time use)
+.claude/setup-symlink.sh
 
-# Command history (private)
-.claude/history.jsonl
+# Allow skills directory
+!.claude/skills/
 
-# Session-specific todos
-.claude/todos/
-
-# Temporary session plans
-.claude/plans/
-
-# Session environment
-.claude/session-env/
-
-# ============================================
-# Claude - Project-Specific Data
-# ============================================
-
-# Project-specific configurations (contain absolute paths)
-.claude/projects/
-
-# ============================================
-# Claude - Plugin Cache and Marketplace Data
-# ============================================
-
-# Downloaded plugin cache (re-downloadable)
+# Allow plugins directory but ignore all plugin-related files except custom plugin dirs
+!.claude/plugins/
+# Ignore all plugin metadata, cache, and symlinks
+.claude/plugins/*.json
 .claude/plugins/cache/
-
-# Installed plugins manifest (contains absolute paths)
-.claude/plugins/installed_plugins.json
-
-# Marketplace data (regeneratable)
-.claude/plugins/known_marketplaces.json
 .claude/plugins/marketplaces/
+.claude/plugins/dev-suite
+# Allow .original directories (actual custom plugins)
+!.claude/plugins/*.original/
+!.claude/plugins/*.original/**
 
-# ============================================
-# Claude - Debug and Logs
-# ============================================
-
-# Debug logs
-.claude/debug/
-
-# ============================================
-# Claude - File and Edit History
-# ============================================
-
-# File edit history
-.claude/file-history/
-
-# Shell snapshots
-.claude/shell-snapshots/
-
-# ============================================
-# Claude - Cache and Analytics
-# ============================================
-
-# General cache
-.claude/cache/
-
-# Downloads directory
-.claude/downloads/
-
-# Stats cache
-.claude/stats-cache.json
-
-# Statsig analytics
-.claude/statsig/
-
-# Telemetry data
-.claude/telemetry/
-
-# ============================================
-# Claude - IDE Integration
-# ============================================
-
-# IDE lock files and integration data
-.claude/ide/
+# Ensure machine-specific and backup files stay ignored
+.claude/settings.local.json
+.claude/*.original
 
 # ============================================
 # System Files
