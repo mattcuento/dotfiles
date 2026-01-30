@@ -6,10 +6,7 @@
 # Configuration
 # ============================================================================
 
-# Auto-detect dotfiles path from this script's location
-# ${(%):-%x} returns the path of the currently executing script
-# We go up two directories: .zsh/git-sync.zsh -> .zsh -> dotfiles root
-DOTFILES_PATH="${${(%):-%x}:A:h:h}"
+DOTFILES_PATH="${HOME}/Development/dotfiles"
 GIT_SYNC_CHECK_INTERVAL=$((4 * 60 * 60))  # 4 hours in seconds
 GIT_SYNC_STATE_FILE="/tmp/.dotfiles-git-sync-state-${USER}"
 

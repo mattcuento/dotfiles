@@ -49,9 +49,6 @@ source $ZSH/oh-my-zsh.sh
 # Git sync for dotfiles
 [[ -f ~/.zsh/git-sync.zsh ]] && source ~/.zsh/git-sync.zsh
 
-# Claude config sync
-[[ -f ~/.zsh/claude-sync.zsh ]] && source ~/.zsh/claude-sync.zsh
-
 # Sensitive data (tokens, secrets) - stored in HOME, not in repo
 # Create ~/.zsh_sensitive with your tokens (see .zsh/sensitive.zsh.example)
 [[ -f ~/.zsh_sensitive ]] && source ~/.zsh_sensitive
