@@ -4,7 +4,6 @@
       "Git status",
       "Git log",
       "WebFetch",
-
       "Bash(ls:*)",
       "Bash(find:*)",
       "Bash(pwd:*)",
@@ -17,7 +16,6 @@
       "Bash(tree:*)",
       "Bash(which:*)",
       "Bash(whoami:*)",
-
       "Bash(cargo:fmt)",
       "Bash(cargo:fmt:*)",
       "Bash(cargo:check)",
@@ -34,7 +32,6 @@
       "Bash(cargo:doc:*)",
       "Bash(cargo:clean)",
       "Bash(cargo:clean:*)",
-
       "Bash(go:fmt)",
       "Bash(go:fmt:*)",
       "Bash(gofmt:*)",
@@ -52,7 +49,6 @@
       "Bash(go:mod:tidy:*)",
       "Bash(go:clean)",
       "Bash(go:clean:*)",
-
       "Bash(mvn:compile)",
       "Bash(mvn:compile:*)",
       "Bash(mvn:test)",
@@ -71,7 +67,6 @@
       "Bash(mvn:spotless:check:*)",
       "Bash(mvn:checkstyle:*)",
       "Bash(checkstyle:*)",
-
       "Bash(gradle:build)",
       "Bash(gradle:build:*)",
       "Bash(gradle:test)",
@@ -88,7 +83,6 @@
       "Bash(./gradlew:check:*)",
       "Bash(./gradlew:clean)",
       "Bash(./gradlew:clean:*)",
-
       "Bash(npm:install)",
       "Bash(npm:ci)",
       "Bash(npm:ci:*)",
@@ -105,7 +99,6 @@
       "Bash(npm:run:test:*)",
       "Bash(npm:run:lint)",
       "Bash(npm:run:lint:*)",
-
       "Bash(yarn:install)",
       "Bash(yarn:test)",
       "Bash(yarn:test:*)",
@@ -113,7 +106,6 @@
       "Bash(yarn:build:*)",
       "Bash(yarn:lint)",
       "Bash(yarn:lint:*)",
-
       "Bash(pnpm:install)",
       "Bash(pnpm:test)",
       "Bash(pnpm:test:*)",
@@ -121,7 +113,6 @@
       "Bash(pnpm:build:*)",
       "Bash(pnpm:lint)",
       "Bash(pnpm:lint:*)",
-
       "Bash(python:*)",
       "Bash(python3:*)",
       "Bash(pip:install:*)",
@@ -134,7 +125,6 @@
       "Bash(poetry:build:*)",
       "Bash(poetry:test)",
       "Bash(poetry:test:*)",
-
       "Bash(ruby:*)",
       "Bash(bundle:install)",
       "Bash(bundle:install:*)",
@@ -145,7 +135,6 @@
       "Bash(rspec:*)",
       "Bash(rubocop:*)",
       "Bash(standardrb:*)",
-
       "Bash(php:*)",
       "Bash(composer:install)",
       "Bash(composer:install:*)",
@@ -154,7 +143,6 @@
       "Bash(composer:run:*)",
       "Bash(composer:check:*)",
       "Bash(phpunit:*)",
-
       "Bash(dotnet:build)",
       "Bash(dotnet:build:*)",
       "Bash(dotnet:test)",
@@ -165,7 +153,6 @@
       "Bash(dotnet:format:*)",
       "Bash(dotnet:restore)",
       "Bash(dotnet:restore:*)",
-
       "Bash(mix:compile)",
       "Bash(mix:compile:*)",
       "Bash(mix:test)",
@@ -176,13 +163,12 @@
       "Bash(mix:deps.get:*)",
       "Bash(mix:clean)",
       "Bash(mix:clean:*)",
-
       "Bash(swift:build)",
       "Bash(swift:build:*)",
       "Bash(swift:test)",
       "Bash(swift:test:*)",
       "Bash(swift:package:*)",
-
+      "Bash(git:add:*)",
       "Bash(git:diff)",
       "Bash(git:diff:*)",
       "Bash(git:show)",
@@ -194,7 +180,6 @@
       "Bash(git:describe)",
       "Bash(git:describe:*)",
       "Bash(git:rev-parse:*)",
-
       "Bash(docker:ps)",
       "Bash(docker:ps:*)",
       "Bash(docker:images)",
@@ -207,7 +192,6 @@
       "Bash(docker:compose:logs:*)",
       "Bash(docker:compose:ps)",
       "Bash(docker:compose:ps:*)",
-
       "Bash(ps:*)",
       "Bash(top:*)",
       "Bash(htop:*)",
@@ -215,13 +199,11 @@
       "Bash(du:*)",
       "Bash(free:*)",
       "Bash(lsof:*)",
-
       "Bash(curl:*)",
       "Bash(wget:*)",
       "Bash(ping:*)",
       "Bash(netstat:*)",
       "Bash(ss:*)",
-
       "Bash(sed:*)",
       "Bash(awk:*)",
       "Bash(sort:*)",
@@ -230,7 +212,6 @@
       "Bash(tr:*)",
       "Bash(jq:*)",
       "Bash(yq:*)",
-
       "Bash(eslint:*)",
       "Bash(prettier:*)",
       "Bash(black:*)",
@@ -239,7 +220,6 @@
       "Bash(ruff:*)",
       "Bash(shellcheck:*)",
       "Bash(hadolint:*)",
-
       "Bash(rustup:show)",
       "Bash(rustup:show:*)",
       "Bash(rustup:check)",
@@ -256,7 +236,6 @@
       "Bash(pyenv:versions:*)",
       "Bash(pyenv:version)",
       "Bash(pyenv:version:*)",
-
       "Bash(brew:list)",
       "Bash(brew:list:*)",
       "Bash(brew:info:*)",
@@ -264,23 +243,29 @@
       "Bash(apt:list)",
       "Bash(apt:list:*)",
       "Bash(apt:show:*)",
-
       "Bash(kubectl:get:*)",
       "Bash(kubectl:describe:*)",
       "Bash(kubectl:logs:*)",
-
       "Bash(make:*)",
       "Bash(cmake:*)",
       "Bash(ninja:*)",
-
-      "Write(*)"
+      "Bash(tee:*)",
+      "Bash(fzf:*)",
+      "Bash(wc:*)",
+      "Bash(echo:*)",
+      "Bash(file:*)",
+      "Bash(env:*)",
+      "Bash(sort:*)",
+      "Bash(mkdir:*)"
     ]
   },
+  "model": "sonnet",
   "enabledPlugins": {
     "dev-suite": true,
     "rust-analyzer-lsp@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": true,
-    "jdtls-lsp@claude-plugins-official": true
-  },
-  "model": "sonnet"
+    "jdtls-lsp@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "claude-code-setup@claude-plugins-official": true
+  }
 }
