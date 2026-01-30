@@ -15,3 +15,8 @@ asdf_update_java_home() {
 }
 autoload -U add-zsh-hook
 add-zsh-hook precmd asdf_update_java_home
+
+# Sync Manager Configuration
+export DOTFILES_PATH="${HOME}/.dotfiles"
+export CLAUDE_DIR="${HOME}/.claude"
+export CLAUDE_REPO_URL="https://github.com/mattcuento/claudefiles.git"
