@@ -3942,7 +3942,7 @@
 		</dict>
 	</dict>
 	<key>Default Bookmark Guid</key>
-	<string>D5823551-3901-4D5A-BADC-497373417C55</string>
+	<string>D26FB461-DFD0-478A-B5DE-5C0858B3D176</string>
 	<key>GlobalKeyMap</key>
 	<dict>
 		<key>0xd-0x20000-0x24</key>
@@ -4719,14 +4719,16 @@
 				<key>Red Component</key>
 				<real>0.29803921568627451</real>
 			</dict>
+			<key>Bound Hosts</key>
+			<array/>
 			<key>Character Encoding</key>
 			<integer>4</integer>
 			<key>Close Sessions On End</key>
-			<true/>
+			<integer>1</integer>
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
-			<string>/bin/zsh</string>
+			<string></string>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Alpha Component</key>
@@ -4898,9 +4900,11 @@
 				<real>0.29803921568627451</real>
 			</dict>
 			<key>Guid</key>
-			<string>D5823551-3901-4D5A-BADC-497373417C55</string>
+			<string>D26FB461-DFD0-478A-B5DE-5C0858B3D176</string>
 			<key>Horizontal Spacing</key>
 			<real>1</real>
+			<key>Icon</key>
+			<integer>1</integer>
 			<key>Idle Code</key>
 			<integer>0</integer>
 			<key>Jobs to Ignore</key>
@@ -5014,6 +5018,8 @@
 				<key>Red Component</key>
 				<real>0.015686274509803921</real>
 			</dict>
+			<key>Load Shell Integration Automatically</key>
+			<true/>
 			<key>Match Background Color (Dark)</key>
 			<dict>
 				<key>Alpha Component</key>
@@ -5219,6 +5225,8 @@
 	</dict>
 	<key>SoundForEsc</key>
 	<false/>
+	<key>SuppressRestartAnnouncement</key>
+	<true/>
 	<key>TabStyleWithAutomaticOption</key>
 	<integer>5</integer>
 	<key>UseBorder</key>
