@@ -1,3 +1,6 @@
 [user]
 	name = Matt Cuento
 	email = cuentomr17@gmail.com
+
+[push]
+	autoSetupRemote = true

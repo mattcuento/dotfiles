@@ -259,7 +259,6 @@
       "Bash(mkdir:*)"
     ]
   },
-  "model": "sonnet",
   "enabledPlugins": {
     "dev-suite": true,
     "rust-analyzer-lsp@claude-plugins-official": true,
