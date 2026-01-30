@@ -61,9 +61,9 @@ source $ZSH/oh-my-zsh.sh
 source $(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
 # ============================================
-# Optional: Auto-start tmux
+# Optional: Auto-start tmux (iTerm2 only)
 # ============================================
-# Uncomment to automatically start tmux on shell launch
-# if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-#   exec tmux new-session -A -s home
-# fi
+# Automatically start tmux only when in iTerm2
+if [[ "$TERM_PROGRAM" == "iTerm.app" ]] && command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+  exec tmux new-session -A -s home
+fi
