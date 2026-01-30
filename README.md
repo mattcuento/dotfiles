@@ -9,11 +9,6 @@ dotfiles/
 ├── .gitignore              # Excludes machine-specific/transient files
 ├── .gitconfig              # → ~/.gitconfig (git user identity)
 ├── README.md               # This file
-├── .claude/                # → ~/.claude/
-│   ├── CLAUDE.md          # User preferences and guidelines
-│   ├── settings.json      # Global settings
-│   └── plugins/
-│       └── dev-suite/     # Custom development plugin
 ├── .config/                # → ~/.config/
 │   ├── gh/                # GitHub CLI configuration
 │   │   ├── config.yml     # Global preferences and aliases
@@ -46,7 +41,6 @@ Note: Sensitive data goes in ~/.zsh_sensitive (home root, not tracked)
 
 **Mapping**: The directory structure mirrors your home directory exactly.
 
-- `dotfiles/.claude/` → `~/.claude/`
 - `dotfiles/.config/git/` → `~/.config/git/`
 - `dotfiles/.gitconfig` → `~/.gitconfig`
 - `dotfiles/.tmux.conf` → `~/.tmux.conf`
@@ -69,16 +63,12 @@ brew install stow  # macOS
 git clone <your-repo-url> ~/Development/dotfiles
 cd ~/Development/dotfiles
 
-# Backup existing configs (optional but recommended)
-mv ~/.claude ~/.claude.backup
-
 # Create all symlinks automatically
 stow -t ~ .
 ```
 
 **What stow does:**
 
-- Creates `~/.claude` → `~/Development/dotfiles/.claude`
 - Creates `~/.config` → `~/Development/dotfiles/.config`
 - Handles all nested files and directories automatically
 
@@ -90,11 +80,7 @@ If you prefer manual control or don't want to use stow:
 # Clone repository
 git clone <your-repo-url> ~/Development/dotfiles
 
-# Backup existing configs (optional)
-mv ~/.claude ~/.claude.backup
-
 # Create symlinks
-ln -s ~/Development/dotfiles/.claude ~/.claude
 ln -s ~/Development/dotfiles/.config ~/.config
 
 # Or symlink individual files/directories as needed
@@ -107,51 +93,10 @@ ln -s ~/Development/dotfiles/.config ~/.config
 ls -la ~ | grep '\->'
 
 # Should show:
-# .claude -> /Users/you/Development/dotfiles/.claude
 # .config -> /Users/you/Development/dotfiles/.config
-
-# Test Claude
-claude --version
 ```
 
 ## What's Included
-
-### Claude Configuration (`.claude/`)
-
-**Versioned (Portable):**
-
-- `CLAUDE.md` - Personal preferences and development guidelines
-- `settings.json` - Global settings (permissions, plugins, model)
-- `plugins/dev-suite/` - Custom local plugin with 5 specialized agents
-
-**Ignored (Machine-Specific):**
-
-- `settings.local.json` - Machine-specific overrides
-- `history.jsonl` - Command history
-- `projects/` - Project data with absolute paths
-- `cache/`, `downloads/`, `todos/` - Transient data
-- Plugin marketplace cache
-
-See `.gitignore` for the complete exclusion list.
-
-### Claude Dev-Suite Plugin
-
-Custom plugin with 5 specialized development agents:
-
-1. **system-architect** (Blue, Sonnet) - System architecture and SOLID principles
-2. **feature-planner** (Cyan, Sonnet) - Implementation plans with TDD approach
-3. **implementation-dev** (Green, Haiku) - TDD implementation with minimal code
-4. **qa-tester** (Yellow, Haiku) - Comprehensive testing and validation
-5. **code-reviewer** (Red, Sonnet) - Quality review and SOLID compliance
-
-**Usage:**
-
-```bash
-/dev-suite:dev-workflow    # Complete development lifecycle
-/dev-suite:design-review   # Architecture and design review
-```
-
-See `.claude/plugins/dev-suite/README.md` for complete documentation.
 
 ### Tmux Configuration (`.tmux.conf` + `.tmux/`)
 
@@ -268,7 +213,7 @@ If you're pressing `Ctrl-b` and nothing happens, remember this config uses `Ctrl
 **What's included:**
 
 - User name and email configuration
-- Global gitignore for `.claude/settings.local.json`
+- Global gitignore patterns
 
 **Setup on new machine:**
 The symlinks created by stow or manual linking will automatically configure git with your identity and global ignores.
@@ -664,7 +609,6 @@ git commit -m "Add tmux configuration"
 
 | Tool                | Home Location               | Dotfiles Location       |
 | ------------------- | --------------------------- | ----------------------- |
-| Claude              | `~/.claude/`                | `.claude/`              |
 | Git                 | `~/.gitconfig`              | `.gitconfig`            |
 | Git (global ignore) | `~/.config/git/`            | `.config/git/`          |
 | Neovim              | `~/.config/nvim/`           | `.config/nvim/`         |
@@ -683,7 +627,6 @@ git clone --recurse-submodules <your-repo-url> ~/Development/dotfiles
 # This includes TPM (Tmux Plugin Manager) automatically!
 
 # 2. Install dependencies (if needed)
-# - Claude CLI
 # - GNU Stow (optional)
 # - Other tools (nvim, tmux, etc.)
 
@@ -692,7 +635,6 @@ cd ~/Development/dotfiles
 stow -t ~ .
 
 # Or manually:
-ln -s ~/Development/dotfiles/.claude ~/.claude
 ln -s ~/Development/dotfiles/.config ~/.config
 ln -s ~/Development/dotfiles/.tmux.conf ~/.tmux.conf
 ln -s ~/Development/dotfiles/.tmux ~/.tmux
@@ -700,12 +642,6 @@ ln -s ~/Development/dotfiles/.tmux ~/.tmux
 # 4. Install tmux plugins (if using tmux)
 tmux
 # Press: Ctrl-Space + I (to install plugins)
-
-# 5. First run
-# Claude will create machine-specific files automatically
-# - settings.local.json
-# - Plugin cache (marketplace plugins downloaded)
-# - Session data, logs, etc.
 ```
 
 ### Pulling Updates
@@ -716,7 +652,7 @@ Changes sync instantly since configs are symlinked:
 cd ~/Development/dotfiles
 git pull
 git submodule update --remote --merge  # Update submodules (TPM)
-# Changes are immediately available in ~/.claude, ~/.config, etc.
+# Changes are immediately available in ~/.config, etc.
 ```
 
 ## Updating Configuration
@@ -727,28 +663,14 @@ git submodule update --remote --merge  # Update submodules (TPM)
 cd ~/Development/dotfiles
 
 # Edit files directly (changes reflect immediately)
-vim .claude/CLAUDE.md
-vim .claude/settings.json
+vim .gitconfig
+vim .config/nvim/init.lua
 
 # Stage and commit
-git add .claude/CLAUDE.md
-git commit -m "Update Claude preferences"
+git add .gitconfig
+git commit -m "Update git configuration"
 git push
 ```
-
-### Machine-Specific Overrides
-
-Create `~/.claude/settings.local.json` for machine-specific settings:
-
-```json
-{
-  "permissions": {
-    "allow": ["Bash(custom-tool:*)"]
-  }
-}
-```
-
-This file is ignored by git and won't conflict with the repository.
 
 ## Git Workflow
 
@@ -761,10 +683,10 @@ cd ~/Development/dotfiles
 git status
 
 # Stage changes
-git add .claude/CLAUDE.md
+git add .gitconfig
 
 # Commit
-git commit -m "Update coding preferences"
+git commit -m "Update git configuration"
 
 # Push to remote
 git push
@@ -791,7 +713,7 @@ git push -u origin main
 
 ```bash
 # Stow specific directory only
-stow -t ~ -d ~/Development/dotfiles .claude
+stow -t ~ -d ~/Development/dotfiles .config
 
 # Unstow (remove symlinks)
 stow -D -t ~ .
@@ -818,15 +740,15 @@ stow -n -v -t ~ .
 **Check if symlink exists:**
 
 ```bash
-ls -la ~/.claude
-# Should show: .claude -> /Users/you/Development/dotfiles/.claude
+ls -la ~/.config
+# Should show: .config -> /Users/you/Development/dotfiles/.config
 ```
 
 **Fix broken symlink:**
 
 ```bash
-rm ~/.claude
-ln -s ~/Development/dotfiles/.claude ~/.claude
+rm ~/.config
+ln -s ~/Development/dotfiles/.config ~/.config
 ```
 
 ### Stow Conflicts
@@ -835,24 +757,10 @@ ln -s ~/Development/dotfiles/.claude ~/.claude
 
 ```bash
 # Backup existing file
-mv ~/.claude ~/.claude.backup
+mv ~/.config ~/.config.backup
 
 # Retry stow
 stow -t ~ .
-```
-
-### Claude Plugin Not Loading
-
-**Check plugin enabled:**
-
-```bash
-cat ~/.claude/settings.json | jq .enabledPlugins
-```
-
-**Restart Claude:**
-
-```bash
-# Exit and restart claude
 ```
 
 ### Git Shows Ignored Files
@@ -887,7 +795,7 @@ git check-ignore -v <file-path>
 
 - **Location**: `~/Development/dotfiles`
 - **Symlink Strategy**: Mirror home directory structure
-- **Primary Configs**: Claude CLI (`.claude/`)
+- **Primary Configs**: Git, Neovim, Tmux, Zsh
 - **Ready For**: nvim, tmux, zsh, and more (`.config/`, root-level dotfiles)
 - **Version**: 1.0.0
 
@@ -909,10 +817,6 @@ git check-ignore -v <file-path>
 3. **Setup Other Machines**:
    - Clone and stow on your other computers
    - Same configs everywhere, instantly
-
-4. **Explore Dev-Suite**:
-   - Read `.claude/plugins/dev-suite/README.md`
-   - Try `/dev-suite:dev-workflow`
 
 ---
 

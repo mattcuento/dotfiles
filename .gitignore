@@ -3,53 +3,6 @@
 # Machine-specific and transient files are excluded.
 
 # ============================================
-# Claude Code - Allowlist Strategy
-# ============================================
-# STRATEGY: Ignore everything in .claude/ by default, then explicitly
-# allow only configuration files. This prevents accidentally committing
-# any new runtime/session data that Claude Code might create.
-#
-# TRACKED (explicitly allowed):
-#   - CLAUDE.md (user preferences)
-#   - settings.json (shared settings)
-#   - skills/ (custom skills only)
-#   - plugins/ directories (future custom plugins)
-#
-# IGNORED (everything else):
-#   - All runtime data (history, plans, debug, etc.)
-#   - All session data (todos, session-env, etc.)
-#   - All cache/marketplace/installed plugins metadata
-#   - Machine-specific settings (settings.local.json)
-# ============================================
-
-# Ignore everything in .claude/ by default
-.claude/*
-
-# Explicitly allow configuration files
-!.claude/CLAUDE.md
-!.claude/settings.json
-# Ignore setup script (one-time use)
-.claude/setup-symlink.sh
-
-# Allow skills directory
-!.claude/skills/
-
-# Allow plugins directory but ignore all plugin-related files except custom plugin dirs
-!.claude/plugins/
-# Ignore all plugin metadata, cache, and symlinks
-.claude/plugins/*.json
-.claude/plugins/cache/
-.claude/plugins/marketplaces/
-.claude/plugins/dev-suite
-# Allow .original directories (actual custom plugins)
-!.claude/plugins/*.original/
-!.claude/plugins/*.original/**
-
-# Ensure machine-specific and backup files stay ignored
-.claude/settings.local.json
-.claude/*.original
-
-# ============================================
 # System Files
 # ============================================
 
