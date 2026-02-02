@@ -1,0 +1,46 @@
+# Git Delta Configuration
+# Delta provides syntax-highlighted diffs with side-by-side view
+# Documentation: https://github.com/dandavison/delta
+
+[core]
+    # Use delta as default pager for all git commands
+    pager = delta
+
+[interactive]
+    # Use delta for interactive commands (git add -p, etc)
+    diffFilter = delta --color-only --features=interactive
+
+[delta]
+    # Feature set to enable (defined below)
+    features = decorations
+
+    # Enable navigation with n/N between diff sections
+    navigate = true
+
+    # Show old and new side-by-side
+    side-by-side = true
+
+    # Show line numbers
+    line-numbers = true
+
+    # Dark terminal theme
+    dark = true
+
+    # Syntax highlighting theme
+    syntax-theme = Monokai Extended
+
+[delta "interactive"]
+    keep-plus-minus-markers = false
+
+[delta "decorations"]
+    commit-decoration-style = blue ol
+    commit-style = raw
+    file-style = omit
+    hunk-header-decoration-style = blue box
+    hunk-header-file-style = red
+    hunk-header-line-number-style = "#067a00"
+    hunk-header-style = file line-number syntax
+
+[merge]
+    # Better merge conflict display (git 2.35+)
+    conflictStyle = zdiff3
