@@ -17,22 +17,21 @@ return {
     "neovim/nvim-lspconfig",
     config = function()
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
-      local lspconfig = require("lspconfig")
-      lspconfig.lua_ls.setup({
-        capabilities = capabilities
-      })
-      lspconfig.ts_ls.setup({
-        capabilities = capabilities
-      })
-      lspconfig.pylsp.setup({
-        capabilities = capabilities
-      })
-      lspconfig.kotlin_language_server.setup({
-        capabilities = capabilities
-      })
-      lspconfig.jdtls.setup({
-        capabilities = capabilities
-      })
+
+      -- Use new vim.lsp.enable API (Neovim 0.11+)
+      local servers = {
+        'lua_ls',
+        'ts_ls',
+        'pylsp',
+        'kotlin_language_server',
+        'jdtls'
+      }
+
+      for _, server in ipairs(servers) do
+        vim.lsp.enable(server, {
+          capabilities = capabilities
+        })
+      end
 
       vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
       vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
