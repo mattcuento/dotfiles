@@ -1,0 +1,12 @@
+theme = IC Orange PPL
+# theme = Matte Black
+# theme = Gitlab Dark Grey 
+# theme = Snazzy Soft
+# theme = Material Design Colors
+# theme = Bright Lights
+font-family = Fira Code Mono
+# font-family = MesloLGS NF
+# font-family = JetBrainsMono Nerd Font Mono
+font-size = 12
+copy-on-select = clipboard
+macos-option-as-alt = true

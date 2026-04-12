@@ -15,46 +15,44 @@
 *.swo
 
 # ============================================
-# Tmux - Plugin and Runtime Data
+# Fish - Lockfile-only tracking
+# ============================================
+# Track only the source of truth; the rest is installed by fisher.
+# On a new machine, run `fisher update` to reinstall everything in
+# fish_plugins (tide, fzf.fish, catppuccin, plugin-git, plugin-jj, ...).
+#
+# fish_variables (fish/tide universal-variable state) is intentionally NOT
+# tracked -- the portable tide config lives in conf.d/tide.fish instead.
+.config/fish/*
+!.config/fish/config.fish
+!.config/fish/fish_plugins
+!.config/fish/conf.d/
+.config/fish/conf.d/*
+!.config/fish/conf.d/tide.fish
+
+# ============================================
+# Zellij
 # ============================================
 
-# Tmux plugins (managed by TPM, re-downloadable)
-# Note: TPM itself is a submodule and is versioned
-.tmux/plugins/*
-!.tmux/plugins/tpm
+# Auto-generated config backups
+.config/zellij/*.bak
+.config/zellij/*.bak.*
 
-# Tmux resurrect/continuum data (session state)
-.tmux/resurrect/
+# ============================================
+# Jujutsu (jj)
+# ============================================
 
-# Tmux server state
-.tmux/tmp/
+# Per-repository state (not portable)
+.config/jj/repos/
 
 # ============================================
 # Neovim - Plugin and Runtime Data
 # ============================================
 
-# Vim/Neovim native package management (downloaded plugins)
-.config/nvim/pack/
-
-# Lazy.nvim plugin data is stored in ~/.local/share/nvim/lazy/
-# (outside config directory, so no gitignore needed here)
-
-# ============================================
-# Zsh - Sensitive Data and History
-# ============================================
-
-# NOTE: Sensitive data is stored in ~/.zsh_sensitive (in home root),
-# which is outside this repo, so it's automatically not tracked.
-# The patterns below are defensive in case files end up in wrong location.
-
-# Zsh history (contains command history with potential secrets)
-.zsh_history
-*/.zsh_history
-
-# Zsh sessions (contains session state)
-.zsh_sessions/
-*/.zsh_sessions/
-
-# Defensive: Block any sensitive.zsh files
-*sensitive.zsh
-!*sensitive.zsh.example
+# Plugin data lives in ~/.local/share/nvim/lazy/ (outside this config).
+# Test/scratch artifacts (mirrors .config/nvim/.gitignore):
+.config/nvim/.tests/
+.config/nvim/.repro/
+.config/nvim/doc/tags
+.config/nvim/data/
+.config/nvim/*.log

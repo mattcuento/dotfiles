@@ -1,0 +1,16 @@
+
+[aliases]
+wa = [
+  'util', 'exec', '--', 'bash', '-c',
+  'jj workspace add --name $0 $(jj workspace root).$0'
+]
+
+[user]
+name = "Matt Cuento"
+email = "cuentomr17@gmail.com"
+
+[signing]
+backend = "gpg"
+key = "68F435624B13E3EA"
+behavior = "own"
+
