@@ -46,23 +46,36 @@ dotfiles/
         └── hosts.yml
 ```
 
-## Quick setup on a new machine
+## Fresh machine setup
 
 ```bash
-# 1. Clone
+# 1. Install everything via Homebrew
+brew install fish zellij jj neovim gh stow \
+             fzf zoxide eza bat ripgrep fd     # fish + its plugins' deps
+brew install --cask ghostty
+
+# 2. Make fish the login shell
+echo (which fish) | sudo tee -a /etc/shells
+chsh -s (which fish)
+
+# 3. Clone and symlink into ~ (whole-dir symlinks, one per tool)
 git clone <repo-url> ~/.dotfiles
-cd ~/.dotfiles
+mkdir -p ~/.config          # ensures stow symlinks each ~/.config/<tool>, not ~/.config itself
+cd ~/.dotfiles && stow -t ~ .
 
-# 2. Symlink into home (GNU Stow, recommended)
-brew install stow
-stow -t ~ .
+# 4. Install fish plugins (fisher reads fish_plugins)
+curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source
+fisher update
 
-# ...or manually, per tool:
-#   ln -s ~/.dotfiles/.gitconfig ~/.gitconfig
-#   ln -s ~/.dotfiles/.config/fish ~/.config/fish   (etc.)
+# 5. First nvim launch installs LazyVim plugins; authenticate gh
+nvim +qa
+gh auth login
 ```
 
-Then install the tools and their plugins (below).
+That's it — `git`, `jj`, `zellij`, and `ghostty` are configured the moment
+their symlinks exist. Each `~/.config/<tool>` becomes a symlink into this repo;
+`.gitignore` keeps the plugin/runtime files those tools write back (fisher
+plugins, `jj/repos/`, nvim data) out of version control.
 
 ## Per-tool notes
 
@@ -89,14 +102,6 @@ end > ~/.config/fish/conf.d/tide.fish
 Note: because these are applied on every shell start, ad-hoc `tide configure`
 changes are overwritten on the next shell unless you regenerate the file.
 
-```bash
-brew install fish fzf zoxide eza bat ripgrep
-
-# Install fisher, then all plugins from fish_plugins:
-curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
-fisher update
-```
-
 Plugins pulled in via `fish_plugins`: `fisher`, `patrickf1/fzf.fish`,
 `ilancosman/tide@v6` (prompt), `catppuccin/fish` (theme), `jhillyerd/plugin-git`,
 `kapsmudit/plugin-jj`.
@@ -107,17 +112,9 @@ colliding with zellij), and abbreviations (`vim→nvim`, `ls→eza`, `cat→bat`
 
 ### Zellij (`.config/zellij/config.kdl`)
 
-```bash
-brew install zellij
-```
-
 `*.bak` backups that zellij writes next to the config are gitignored.
 
 ### jj + git (`.config/jj/config.toml`, `.gitconfig`)
-
-```bash
-brew install jj
-```
 
 `jj/config.toml` holds identity, GPG commit signing, and a `wa` alias for
 workspace-add. Per-repo state under `.config/jj/repos/` is gitignored.
@@ -125,11 +122,6 @@ workspace-add. Per-repo state under `.config/jj/repos/` is gitignored.
 ID, safe to commit).
 
 ### Neovim (`.config/nvim/`) — LazyVim
-
-```bash
-brew install neovim
-nvim   # LazyVim bootstraps and installs plugins on first launch
-```
 
 Standard [LazyVim](https://www.lazyvim.org/) layout: `lua/config/` for core
 settings, `lua/plugins/` for plugin specs (gruvbox, mini, multicursor,
@@ -163,22 +155,32 @@ Manage these with `:LazyExtras` inside Neovim.
 
 ### Ghostty (`.config/ghostty/config`)
 
-```bash
-brew install --cask ghostty
-```
-
 Fira Code Mono, size 12, `copy-on-select`, `macos-option-as-alt`. Extra themes
 are listed as commented-out lines to switch between.
 
-## Syncing
+## Updating & installing
 
-Configs are symlinked, so `git pull` makes changes live immediately. To capture
-local changes, edit the files in this repo (or in `~/.config/...` if symlinked)
-and commit:
+Because everything is symlinked, edits are live immediately — edit the files in
+this repo (or in `~/.config/...`, same thing) and commit.
 
 ```bash
-cd ~/.dotfiles
+# Pull the latest config onto this machine
+cd ~/.dotfiles && git pull
+
+# Save local changes back
 git add -A && git commit -m "Update <tool> config" && git push
+
+# Update fish plugins (after editing fish_plugins)
+fisher update
+
+# Update Neovim plugins, then commit the refreshed lockfile
+nvim +"Lazy sync" +qa
+git add .config/nvim/lazy-lock.json && git commit -m "nvim: bump plugins"
+
+# Re-capture tide prompt settings after `tide configure`
+for v in (set --names --universal | sort)
+    string match -qr '^tide_' -- $v; and echo "set -U $v "(string escape -- $$v)
+end > ~/.config/fish/conf.d/tide.fish
 ```
 
 ## What's intentionally not tracked
