@@ -14,8 +14,10 @@ return {
         keys = {
             { "<leader>jj", "<cmd>J log<cr>", desc = "JJ log" },
             { "<leader>jS", "<cmd>J status<cr>", desc = "JJ status buffer" },
-            { "<leader>ja", "<cmd>J annotate<cr>", desc = "JJ annotate file" },
-            { "<leader>jA", "<cmd>J annotate_line<cr>", desc = "JJ annotate line" },
+            { "<leader>jb", "<cmd>J annotate<cr>", desc = "JJ annotate file" },
+            { "<leader>jB", "<cmd>J annotate_line<cr>", desc = "JJ annotate line" },
+            { "<leader>jd", "<cmd>Jdiff<cr>", desc = "JJ diff current file" },
+            { "<leader>jD", "<cmd>Jhdiff<cr>", desc = "JJ horizontal diff current file" },
             {
                 "<leader>js",
                 function()
@@ -58,6 +60,16 @@ return {
             signcolumn = true,
             numhl = false,
             linehl = false,
+        },
+    },
+
+    {
+        "folke/snacks.nvim",
+        keys = {
+            { "<leader>gd", false },
+            { "<leader>gD", false },
+            { "<leader>gs", false },
+            { "<leader>gS", false },
         },
     },
 

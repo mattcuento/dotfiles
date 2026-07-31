@@ -6,6 +6,27 @@
 -- KEYMAPS
 -- ============================================================================
 
+-- Remove Git-backed workflows that have JJ replacements. Some are registered
+-- lazily by Snacks, so defer cleanup until the startup callbacks have settled.
+-- Keep GitHub browse, issue, and pull-request mappings: those are hosting actions.
+local dead_git_mappings = {
+    "<leader>gg",
+    "<leader>gG",
+    "<leader>gL",
+    "<leader>gb",
+    "<leader>gf",
+    "<leader>gl",
+    "<leader>gd",
+    "<leader>gD",
+    "<leader>gs",
+}
+
+vim.schedule(function()
+    for _, lhs in ipairs(dead_git_mappings) do
+        pcall(vim.keymap.del, "n", lhs)
+    end
+end)
+
 -- Map Ctrl+C to act exactly like Escape
 vim.keymap.set("i", "<C-c>", "<Esc>", { desc = "Exit insert mode" })
 vim.keymap.set("v", "<C-c>", "<Esc>", { desc = "Exit visual mode" })
