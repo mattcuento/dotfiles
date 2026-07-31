@@ -1,5 +1,13 @@
 
 [aliases]
+l = ["log", "-r", "(trunk()..@)- | @"]
+ll = ["log", "-r", "(trunk()..@):: | (trunk()..@)-"]
+lr = ["log", "-r"]
+cp = ["duplicate"]
+sp = ["split"]
+pl = ["parallelize"]
+sync = ["rebase", "-s", "roots(trunk()..@)", "-d", "trunk()"]
+
 wa = [
   'util', 'exec', '--', 'bash', '-c',
   'jj workspace add --name $0 $(jj workspace root).$0'
