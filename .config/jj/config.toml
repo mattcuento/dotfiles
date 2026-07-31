@@ -1,0 +1,51 @@
+
+[aliases]
+wa = [
+  'util', 'exec', '--', 'bash', '-c',
+  'jj workspace add --name $0 $(jj workspace root).$0'
+]
+
+[user]
+name = "Matt Cuento"
+email = "cuentomr17@gmail.com"
+
+[signing]
+backend = "gpg"
+key = "68F435624B13E3EA"
+behavior = "own"
+
+[templates]
+log = '''
+change_id.shortest(7) ++ " " ++
+committer.timestamp().ago() ++ " " ++
+if(self.contained_in("first_parent(@)"), label("git_head_label", "HEAD "), "") ++
+if(conflict, label("conflict", "(conflict) "), "") ++
+if(divergent, label("divergent", "(divergent) "), "") ++
+separate(", ",
+  self.remote_bookmarks().filter(|r| r.remote() == "origin").map(|r| label("bookmark", "✦" ++ r.name())),
+  self.local_bookmarks().map(|r| label("bookmark", r.name())),
+  self.tags().map(|r| label("bookmark", r.name())),
+) ++
+if(author.email() == "you@example.com", "", " " ++ author.email()) ++
+"\n " ++
+commit_id.shortest(6) ++ " " ++
+if(conflict, label("conflict", "×× "), "") ++
+if(divergent, label("divergent", "﹖ "), "") ++
+if(empty,
+  label("empty", "(empty) ") ++ description.first_line(),
+  if(description.first_line(),
+    description.first_line(),
+    label("empty description placeholder", "(no description)")
+  )
+) ++
+"\n"
+'''
+
+[merge-tools.vimdiff]
+program = "nvim"
+
+# Optional: Ensure the merge-tool is explicitly configured for conflict resolution
+[ui]
+diff-editor = ["nvim", "-c", "DiffEditor $left $right $output"]
+editor = "nvim"
+merge-tool = "vimdiff"

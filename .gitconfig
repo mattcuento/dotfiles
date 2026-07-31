@@ -1,0 +1,10 @@
+[push]
+	autoSetupRemote = true
+[user]
+	email = cuentomr17@gmail.com
+	name = Matt Cuento
+	signingkey = 68F435624B13E3EA
+[commit]
+	gpgsign = true
+[pull]
+	rebase = false

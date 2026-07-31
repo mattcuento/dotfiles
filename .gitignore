@@ -1,0 +1,68 @@
+# Dotfiles Repository - .gitignore
+# This repository contains portable configuration files.
+# Machine-specific and transient files are excluded.
+
+# ============================================
+# System Files
+# ============================================
+
+# macOS system files
+.DS_Store
+
+# Editor backup files
+*~
+*.swp
+*.swo
+
+# ============================================
+# Credentials and application state
+# ============================================
+
+.config/gh/hosts.yml
+.config/gcloud/
+.config/github-copilot/
+.config/planetscale/
+.config/raycast/
+
+# ============================================
+# Fish - Lockfile-only tracking
+# ============================================
+# Track only the source of truth; the rest is installed by fisher.
+# On a new machine, run `fisher update` to reinstall everything in
+# fish_plugins (tide, fzf.fish, catppuccin, plugin-git, plugin-jj, ...).
+#
+# fish_variables (fish/tide universal-variable state) is intentionally NOT
+# tracked -- the portable tide config lives in conf.d/tide.fish instead.
+.config/fish/*
+!.config/fish/config.fish
+!.config/fish/fish_plugins
+!.config/fish/conf.d/
+.config/fish/conf.d/*
+!.config/fish/conf.d/tide.fish
+
+# ============================================
+# Zellij
+# ============================================
+
+# Auto-generated config backups
+.config/zellij/*.bak
+.config/zellij/*.bak.*
+
+# ============================================
+# Jujutsu (jj)
+# ============================================
+
+# Per-repository state (not portable)
+.config/jj/repos/
+
+# ============================================
+# Neovim - Plugin and Runtime Data
+# ============================================
+
+# Plugin data lives in ~/.local/share/nvim/lazy/ (outside this config).
+# Test/scratch artifacts (mirrors .config/nvim/.gitignore):
+.config/nvim/.tests/
+.config/nvim/.repro/
+.config/nvim/doc/tags
+.config/nvim/data/
+.config/nvim/*.log
