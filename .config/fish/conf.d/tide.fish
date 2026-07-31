@@ -74,7 +74,7 @@ set -U tide_kubectl_bg_color black
 set -U tide_kubectl_color blue
 set -U tide_kubectl_icon 󱃾
 set -U tide_left_prompt_frame_enabled false
-set -U tide_left_prompt_items vi_mode pwd jj
+set -U tide_left_prompt_items pwd jj
 set -U tide_left_prompt_prefix 
 set -U tide_left_prompt_separator_diff_color 
 set -U tide_left_prompt_separator_same_color ╱
