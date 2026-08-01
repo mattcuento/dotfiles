@@ -12,8 +12,9 @@ root-level files) into place.
 | Multiplexer| **zellij**               | `.config/zellij/config.kdl`        |
 | VCS        | **git** + **jujutsu (jj)** | `.gitconfig`, `.config/jj/config.toml` |
 | Editor     | **Neovim** (LazyVim)     | `.config/nvim/`                    |
-| Terminal   | **Ghostty**              | `.config/ghostty/config`           |
+| Terminal   | **Ghostty**              | `.config/ghostty/`                 |
 | GitHub CLI | **gh**                   | `.config/gh/`                      |
+| AI skills  | **Claude + Codex**       | `.claude/skills/`, `.codex/skills/` |
 | Launcher   | **Raycast**              | Encrypted settings export (not tracked) |
 
 > Migrated from a zsh + tmux + iTerm2 + hand-rolled Neovim setup. Legacy
@@ -26,6 +27,8 @@ dotfiles/
 ├── .gitconfig                  # → ~/.gitconfig (identity + GPG signing)
 ├── .gitignore                  # Excludes machine-specific/transient files
 ├── README.md
+├── .claude/skills/             # portable Claude skills
+├── .codex/skills/              # portable Codex skills (not managed .system skills)
 └── .config/                    # → ~/.config/
     ├── fish/                   # fish shell (lockfile-only, see below)
     │   ├── config.fish
@@ -36,13 +39,20 @@ dotfiles/
     │   └── config.kdl
     ├── jj/
     │   └── config.toml
+    ├── k9s/
+    │   ├── config.yaml
+    │   └── skins/
     ├── ghostty/
-    │   └── config
+    │   ├── config
+    │   └── shaders/
+    │       └── shader.glsl      # custom terminal shader
     ├── nvim/                   # LazyVim
     │   ├── init.lua
     │   ├── lazy-lock.json      # plugin lockfile
     │   └── lua/{config,plugins}/
-    └── gh/
+    ├── gh/
+    │   └── config.yml
+    └── gh-dash/
         └── config.yml
 ```
 
@@ -56,37 +66,52 @@ xcode-select --install
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 # 2. Core tools required by these dotfiles
-brew install fish zellij jj neovim gh \
-             fzf zoxide eza bat ripgrep fd jq \
-             gnupg pinentry-mac stylua agavra/tap/tuicr \
+brew install fish zellij jj jjui neovim gh \
+             fzf zoxide eza bat ripgrep fd jq fx \
+             gnupg pinentry-mac stylua tuicr cormacrelf/tap/dark-notify \
              bottom shfmt shellcheck yq dust direnv
 brew install --cask ghostty raycast bitwarden font-fira-code-nerd-font codex
 
-# 3. Make fish the login shell
+# 3. Install Pi
+curl -fsSL https://pi.dev/install.sh | sh
+
+# Restart the shell so Pi's install directory is on PATH, then install packages.
+pi install npm:pi-claude-bridge
+
+# 4. Make fish the login shell
 echo (which fish) | sudo tee -a /etc/shells
 chsh -s (which fish)
 
-# 4. Clone, initialize jj, and link each managed tool
+# 5. Clone, initialize jj, and link each managed tool
 git clone https://github.com/mattcuento/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles && jj git init --colocate
 mkdir -p ~/.config ~/.config/gh
+mkdir -p ~/.claude/skills ~/.codex/skills
 ln -s ~/.dotfiles/.config/fish ~/.config/fish
 ln -s ~/.dotfiles/.config/ghostty ~/.config/ghostty
 ln -s ~/.dotfiles/.config/jj ~/.config/jj
+ln -s ~/.dotfiles/.config/k9s ~/.config/k9s
 ln -s ~/.dotfiles/.config/nvim ~/.config/nvim
 ln -s ~/.dotfiles/.config/zellij ~/.config/zellij
 ln -s ~/.dotfiles/.config/gh/config.yml ~/.config/gh/config.yml
+ln -s ~/.dotfiles/.config/gh-dash ~/.config/gh-dash
 ln -s ~/.dotfiles/.gitconfig ~/.gitconfig
+ln -s ~/.dotfiles/.claude/skills/gh-stack ~/.claude/skills/gh-stack
+ln -s ~/.dotfiles/.claude/skills/jj ~/.claude/skills/jj
+ln -s ~/.dotfiles/.codex/skills/gh-stack ~/.codex/skills/gh-stack
+ln -s ~/.dotfiles/.codex/skills/jj ~/.codex/skills/jj
+ln -s ~/.dotfiles/.codex/skills/tuicr ~/.codex/skills/tuicr
 
-# 5. Install fish plugins (fisher reads fish_plugins)
+# 6. Install fish plugins (fisher reads fish_plugins)
 curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source
 fisher update
 
-# 6. First nvim launch installs LazyVim plugins; authenticate gh
+# 7. First nvim launch installs LazyVim plugins; authenticate gh and install extensions
 nvim +qa
 gh auth login
+gh extension install dlvhdr/gh-dash
 
-# 7. Import the latest encrypted .rayconfig backup in Raycast
+# 8. Import the latest encrypted .rayconfig backup in Raycast
 # Raycast → Settings → Advanced → Import
 ```
 
@@ -122,7 +147,7 @@ required by the dotfiles:
 
 ```bash
 # Containers, Kubernetes, and cloud tooling
-brew install docker kubernetes-cli helm kubie awscli
+brew install docker kubernetes-cli helm kubie derailed/k9s/k9s awscli
 brew install --cask gcloud-cli
 
 # Other GUI/developer applications present on the current Mac
@@ -210,10 +235,18 @@ obsidian, ...). `lazy-lock.json` pins versions; plugin data lives in
 
 Manage these with `:LazyExtras` inside Neovim.
 
-### Ghostty (`.config/ghostty/config`)
+### Ghostty (`.config/ghostty/`)
 
 Fira Code Mono, size 12, `copy-on-select`, `macos-option-as-alt`. Extra themes
-are listed as commented-out lines to switch between.
+are listed as commented-out lines to switch between. Custom shaders live in
+`.config/ghostty/shaders/` and are included automatically by the directory
+symlink; the active shader is selected with `custom-shader` in `config`.
+
+### K9s (`.config/k9s/`)
+
+Fish sets `K9S_CONFIG_DIR=~/.config/k9s`, overriding K9s's macOS default under
+`~/Library/Application Support`. The global config and skins are tracked;
+runtime files generated alongside them are ignored.
 
 ### Raycast
 
@@ -224,6 +257,27 @@ Settings → Advanced and save the encrypted `.rayconfig` backup somewhere
 secure. On the new device, install Raycast and import that backup; it restores
 installed Store extensions, hotkeys, aliases, preferences, and other selected
 Raycast data.
+
+### Claude and Codex skills
+
+User-authored skills are tracked under `.claude/skills/` and `.codex/skills/`
+and linked individually during setup. Codex's `.system` skills and all other
+Claude/Codex application state are intentionally excluded because they are
+managed by the applications and may contain credentials or session data.
+
+### Pi
+
+Pi stores global state under `~/.pi/agent/`. Package declarations are recorded
+in `settings.json`, while downloaded npm packages live under
+`~/.pi/agent/npm/`. Use `pi list` to see packages registered in settings and
+inspect `~/.pi/agent/npm/package.json` to see their resolved npm dependencies.
+
+Do not track `~/.pi`: it also contains `auth.json`, session history, model
+caches, and generated package data. The fresh-machine setup above is the
+portable package manifest; add another `pi install <source>` line there whenever
+you adopt a new global Pi package. Use `pi install -l <source>` only when a
+package belongs to one project, since that writes the declaration to the
+project's `.pi/settings.json` instead.
 
 ## Updating & installing
 

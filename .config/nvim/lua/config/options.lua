@@ -195,9 +195,15 @@ _G.git_branch = git_branch
 _G.file_type = file_type
 _G.file_size = file_size
 
-vim.cmd([[
-  highlight StatusLineBold gui=bold cterm=bold
-]])
+local function refresh_statusline_highlights()
+    local statusline = vim.api.nvim_get_hl(0, { name = "StatusLine", link = false })
+    statusline.bold = true
+    vim.api.nvim_set_hl(0, "StatusLineBold", statusline)
+end
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+    callback = refresh_statusline_highlights,
+})
 
 -- Function to change statusline based on window focus
 local function setup_dynamic_statusline()
@@ -219,7 +225,7 @@ local function setup_dynamic_statusline()
             })
         end,
     })
-    vim.api.nvim_set_hl(0, "StatusLineBold", { bold = true })
+    refresh_statusline_highlights()
 
     vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, {
         callback = function()

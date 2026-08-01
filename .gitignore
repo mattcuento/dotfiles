@@ -24,6 +24,25 @@
 .config/planetscale/
 .config/raycast/
 
+# Pi keeps auth tokens, sessions, caches, and downloaded packages here.
+# Reinstall the portable package list from README.md instead of tracking state.
+.pi/
+
+# Claude and Codex contain credentials, sessions, caches, and managed skills.
+# Track only the explicitly selected, user-authored skill directories.
+.claude/*
+!.claude/skills/
+.claude/skills/*
+!.claude/skills/gh-stack/
+!.claude/skills/jj/
+
+.codex/*
+!.codex/skills/
+.codex/skills/*
+!.codex/skills/gh-stack/
+!.codex/skills/jj/
+!.codex/skills/tuicr/
+
 # ============================================
 # Fish - Lockfile-only tracking
 # ============================================
@@ -54,6 +73,14 @@
 
 # Per-repository state (not portable)
 .config/jj/repos/
+
+# ============================================
+# K9s - Portable config and skins only
+# ============================================
+
+.config/k9s/*
+!.config/k9s/config.yaml
+!.config/k9s/skins/
 
 # ============================================
 # Neovim - Plugin and Runtime Data
