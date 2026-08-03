@@ -8,7 +8,7 @@ root-level files) into place.
 
 | Area       | Tool                     | Config location                    |
 | ---------- | ------------------------ | ---------------------------------- |
-| Shell      | **fish** (+ tide, fzf.fish) | `.config/fish/`                 |
+| Shell      | **fish** + **Starship**      | `.config/fish/`, `.config/starship.toml` |
 | Multiplexer| **zellij**               | `.config/zellij/config.kdl`        |
 | VCS        | **git** + **jujutsu (jj)** | `.gitconfig`, `.config/jj/config.toml` |
 | Editor     | **Neovim** (LazyVim)     | `.config/nvim/`                    |
@@ -32,9 +32,8 @@ dotfiles/
 └── .config/                    # → ~/.config/
     ├── fish/                   # fish shell (lockfile-only, see below)
     │   ├── config.fish
-    │   ├── fish_plugins        # fisher plugin manifest
-    │   └── conf.d/
-    │       └── tide.fish       # tide prompt config, tracked as code
+    │   └── fish_plugins        # fisher plugin manifest
+    ├── starship.toml           # shell prompt
     ├── zellij/
     │   └── config.kdl
     ├── jj/
@@ -66,7 +65,7 @@ xcode-select --install
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 # 2. Core tools required by these dotfiles
-brew install fish zellij jj jjui neovim gh \
+brew install fish starship zellij jj jjui neovim gh \
              fzf zoxide eza bat ripgrep fd jq fx \
              gnupg pinentry-mac stylua tuicr cormacrelf/tap/dark-notify \
              bottom shfmt shellcheck yq dust direnv
@@ -88,6 +87,7 @@ cd ~/.dotfiles && jj git init --colocate
 mkdir -p ~/.config ~/.config/gh
 mkdir -p ~/.claude/skills ~/.codex/skills
 ln -s ~/.dotfiles/.config/fish ~/.config/fish
+ln -s ~/.dotfiles/.config/starship.toml ~/.config/starship.toml
 ln -s ~/.dotfiles/.config/ghostty ~/.config/ghostty
 ln -s ~/.dotfiles/.config/jj ~/.config/jj
 ln -s ~/.dotfiles/.config/k9s ~/.config/k9s
@@ -154,39 +154,25 @@ brew install --cask gcloud-cli
 brew install --cask google-chrome claude-code@latest
 ```
 
-That's it — `git`, `jj`, `zellij`, and `ghostty` are configured the moment
-their symlinks exist. Each `~/.config/<tool>` becomes a symlink into this repo;
-`.gitignore` keeps the plugin/runtime files those tools write back (fisher
-plugins, `jj/repos/`, nvim data) out of version control.
+That's it — Fish, Starship, `git`, `jj`, Zellij, and Ghostty are configured the
+moment their symlinks exist. `.gitignore` keeps the plugin/runtime files those
+tools write back (fisher plugins, `jj/repos/`, nvim data) out of version
+control.
 
 ## Per-tool notes
 
 ### Fish (`.config/fish/`)
 
-Tracked **lockfile-only**: `config.fish`, `fish_plugins`, and
-`conf.d/tide.fish`. Everything else under `functions/`, `conf.d/`,
-`completions/`, and `themes/` is installed by
+Tracked **lockfile-only**: `config.fish` and `fish_plugins`. Everything else
+under `functions/`, `conf.d/`, `completions/`, and `themes/` is installed by
 [fisher](https://github.com/jorgebucaran/fisher) and is gitignored
 (re-downloadable).
 
-**Tide prompt config** is *not* stored via fish's `fish_variables` blob (opaque
-and non-portable). Tide has no config file of its own — it only keeps state in
-universal variables — so the settings are exported as `set -U` commands into
-`conf.d/tide.fish`, which fish auto-sources on startup. To capture new tweaks
-after running `tide configure`, regenerate it:
-
-```fish
-for v in (set --names --universal | sort)
-    string match -qr '^tide_' -- $v; and echo "set -U $v "(string escape -- $$v)
-end > ~/.config/fish/conf.d/tide.fish
-```
-
-Note: because these are applied on every shell start, ad-hoc `tide configure`
-changes are overwritten on the next shell unless you regenerate the file.
+Starship is installed with Homebrew, initialized by `config.fish`, and
+configured by `.config/starship.toml`.
 
 Plugins pulled in via `fish_plugins`: `fisher`, `patrickf1/fzf.fish`,
-`ilancosman/tide@v6` (prompt), `catppuccin/fish` (theme), `jhillyerd/plugin-git`,
-`kapsmudit/plugin-jj`.
+`catppuccin/fish` (theme), `jhillyerd/plugin-git`, `kapsmudit/plugin-jj`.
 
 `config.fish` sets up zoxide, option-key word navigation (tuned to avoid
 colliding with zellij), and abbreviations (`vim→nvim`, `ls→eza`, `cat→bat`,
@@ -304,10 +290,6 @@ jj commit -m "nvim: bump plugins"
 jj bookmark set main -r @-
 jj git push -b main
 
-# Re-capture tide prompt settings after `tide configure`
-for v in (set --names --universal | sort)
-    string match -qr '^tide_' -- $v; and echo "set -U $v "(string escape -- $$v)
-end > ~/.config/fish/conf.d/tide.fish
 ```
 
 ## What's intentionally not tracked
