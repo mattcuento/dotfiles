@@ -1,4 +1,4 @@
-theme = dark:Gruvbox Material Dark, light:Gruvbox Material Light
+theme = dark:Gruvbox Dark, light:Gruvbox Light
 font-family = Fira Code Mono
 # font-family = MesloLGS NF
 # font-family = JetBrainsMono Nerd Font Mono

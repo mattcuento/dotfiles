@@ -53,17 +53,6 @@ return {
     },
 
     {
-        "evanphx/jjsigns.nvim",
-        event = { "BufReadPost", "BufNewFile" },
-        opts = {
-            base = "@-",
-            signcolumn = true,
-            numhl = false,
-            linehl = false,
-        },
-    },
-
-    {
         "folke/snacks.nvim",
         keys = {
             { "<leader>gd", false },

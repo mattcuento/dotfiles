@@ -11,7 +11,6 @@ return {
             require("mini.move").setup()
             require("mini.notify").setup()
             require("mini.icons").setup()
-            require("mini.diff").setup()
             require("mini.bufremove").setup()
             require("mini.cursorword").setup()
             -- Add as many modules as you need here...

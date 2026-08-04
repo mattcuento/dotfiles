@@ -19,6 +19,14 @@ abbr -a -- top btm
 abbr -a -- du dust
 alias ll='eza -lbG --git'
 
+function tuicr
+    if test (defaults read -g AppleInterfaceStyle 2>/dev/null) = Dark
+        command tuicr --theme gruvbox-dark $argv
+    else
+        command tuicr --theme gruvbox-light $argv
+    end
+end
+
 # Additional jj abbreviations adapted from Oliver Nguyen's workflow.
 # Fisher's kapsmudit/plugin-jj provides the rest of the `j*` abbreviations.
 abbr -a -- jab 'jj absorb'
