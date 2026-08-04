@@ -1,5 +1,6 @@
 return {
     "r4ppz/lspeek.nvim",
+    lazy = true,
     opts = {
         window = {
             width = 70,

@@ -48,16 +48,12 @@
 # ============================================
 # Track only the source of truth; the rest is installed by fisher.
 # On a new machine, run `fisher update` to reinstall everything in
-# fish_plugins (tide, fzf.fish, catppuccin, plugin-git, plugin-jj, ...).
+# fish_plugins (fzf.fish, catppuccin, plugin-git, plugin-jj, ...).
 #
-# fish_variables (fish/tide universal-variable state) is intentionally NOT
-# tracked -- the portable tide config lives in conf.d/tide.fish instead.
+# fish_variables (universal-variable state) is intentionally NOT tracked.
 .config/fish/*
 !.config/fish/config.fish
 !.config/fish/fish_plugins
-!.config/fish/conf.d/
-.config/fish/conf.d/*
-!.config/fish/conf.d/tide.fish
 
 # ============================================
 # Zellij

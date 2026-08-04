@@ -42,7 +42,10 @@ return {
         set("n", "<c-leftdrag>", mc.handleMouseDrag)
         set("n", "<c-leftrelease>", mc.handleMouseRelease)
 
-        -- Disable and enable cursors.
+        -- Add or remove a cursor at the current position.
+        set({ "n", "x" }, "<leader>ma", mc.toggleCursor, {
+            desc = "Multicursor: toggle at current position",
+        })
         set({ "n", "x" }, "<c-q>", mc.toggleCursor)
 
         -- Mappings defined in a keymap layer only apply when there are
