@@ -20,7 +20,8 @@ abbr -a -- du dust
 alias ll='eza -lbG --git'
 
 function tuicr
-    if test (defaults read -g AppleInterfaceStyle 2>/dev/null) = Dark
+    set -l appearance (defaults read -g AppleInterfaceStyle 2>/dev/null)
+    if test "$appearance" = Dark
         command tuicr --theme gruvbox-dark $argv
     else
         command tuicr --theme gruvbox-light $argv
