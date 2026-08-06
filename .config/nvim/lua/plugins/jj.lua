@@ -53,6 +53,11 @@ return {
     },
 
     {
+        "rafikdraoui/jj-diffconflicts",
+        cmd = { "JJDiffConflicts" },
+    },
+
+    {
         "folke/snacks.nvim",
         keys = {
             { "<leader>gd", false },

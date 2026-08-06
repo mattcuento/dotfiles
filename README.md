@@ -68,7 +68,7 @@ xcode-select --install
 brew install fish starship zellij jj jjui neovim gh \
              fzf zoxide eza bat ripgrep fd jq fx \
              gnupg pinentry-mac stylua tuicr cormacrelf/tap/dark-notify \
-             bottom shfmt shellcheck yq dust direnv
+             bottom shfmt shellcheck yq dust direnv mergiraf
 brew install --cask ghostty raycast bitwarden font-fira-code-nerd-font codex
 
 # 3. Install Pi

@@ -9,8 +9,12 @@ pl = ["parallelize"]
 sync = ["rebase", "-s", "roots(trunk()..@)", "-d", "trunk()"]
 
 wa = [
-  'util', 'exec', '--', 'bash', '-c',
-  'jj workspace add --name $0 $(jj workspace root).$0'
+    'util',
+    'exec',
+    '--',
+    'bash',
+    '-c',
+    'jj workspace add --name $0 $(jj workspace root).$0',
 ]
 
 [user]
@@ -52,9 +56,18 @@ if(empty,
 [merge-tools.vimdiff]
 program = "nvim"
 
-# Optional: Ensure the merge-tool is explicitly configured for conflict resolution
+[merge-tools.diffconflicts]
+program = "nvim"
+merge-args = [
+  "-c", "let g:jj_diffconflicts_marker_length=$marker_length",
+  "-c", "JJDiffConflicts!", "$output", "$base", "$left", "$right",
+]
+merge-tool-edits-conflict-markers = true
+
 [ui]
 diff-editor = ["nvim", "-c", "DiffEditor $left $right $output"]
 editor = "nvim"
-merge-tool = "vimdiff"
+# Let the syntax-aware resolver handle straightforward conflicts first. If it
+# leaves conflicts behind, resolve them interactively with `--tool vimdiff`.
+merge-tool = "mergiraf"
 default-command = "log"
