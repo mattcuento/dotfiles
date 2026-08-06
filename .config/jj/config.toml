@@ -71,3 +71,4 @@ editor = "nvim"
 # leaves conflicts behind, resolve them interactively with `--tool vimdiff`.
 merge-tool = "mergiraf"
 default-command = "log"
+merge-editor = "mergiraf"
