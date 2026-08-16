@@ -28,6 +28,19 @@ function tuicr
     end
 end
 
+function gh
+    if test (count $argv) -gt 0; and test "$argv[1]" = dash
+        set -l appearance (defaults read -g AppleInterfaceStyle 2>/dev/null)
+        if test "$appearance" = Dark
+            command gh $argv --config "$HOME/.config/gh-dash/themes/gruvbox-dark.yml"
+        else
+            command gh $argv --config "$HOME/.config/gh-dash/themes/gruvbox-light.yml"
+        end
+    else
+        command gh $argv
+    end
+end
+
 # Additional jj abbreviations adapted from Oliver Nguyen's workflow.
 # Fisher's kapsmudit/plugin-jj provides the rest of the `j*` abbreviations.
 abbr -a -- jab 'jj absorb'

@@ -92,34 +92,21 @@ keybindings:
         -- tuicr pr "{{.RepoName}}#{{.PrNumber}}"
 repoPaths: {}
 theme:
-  ui:
-    sectionsShowCount: true
-    table:
-      showSeparator: true
-      compact: false
   colors:
     text:
-      primary: "#dfdedc" # fg0 (Soft White)
-      secondary: "#a89984" # Gray
-      inverted: "#2d353b" # bg0 (Dark Medium)
-      faint: "#7c6f64" # Statusline/Muted line
-      warning: "#ff922b" # Orange
-      success: "#a7c080" # Green
-      actor: "#d3c6aa" # fg
+      primary: "#ebdbb2"
+      secondary: "#a89984"
+      inverted: "#282828"
+      faint: "#928374"
+      warning: "#fabd2f"
+      success: "#b8bb26"
+      actor: "#83a598"
     background:
-      selected: "#475258" # bg4 (Visual Selection)
+      selected: "#504945"
     border:
-      primary: "#505a60" # bg5
-      secondary: "#343f44" # bg1
-      faint: "#3d484d" # bg2
-    inline:
-      icons:
-        newcontributor: "#a7c080" # Green
-        contributor: "#83c092" # Aqua
-        collaborator: "#dbbc7f" # Yellow
-        member: "#e69875" # Orange
-        owner: "#7fbbb3" # Blue
-        unknownrole: "#e67e80" # Red
+      primary: "#d65d0e"
+      secondary: "#665c54"
+      faint: "#3c3836"
 pager:
   diff: ""
 confirmQuit: false

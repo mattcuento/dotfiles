@@ -1,0 +1,16 @@
+theme:
+  colors:
+    text:
+      primary: "#3c3836"
+      secondary: "#504945"
+      inverted: "#fbf1c7"
+      faint: "#928374"
+      warning: "#b57614"
+      success: "#79740e"
+      actor: "#076678"
+    background:
+      selected: "#d5c4a1"
+    border:
+      primary: "#af3a03"
+      secondary: "#bdae93"
+      faint: "#ebdbb2"
