@@ -13,6 +13,27 @@
 
 local augroup = vim.api.nvim_create_augroup("UserConfig", { clear = true })
 
+-- Show long diagnostics in a wrapped float when the cursor rests on them.
+vim.diagnostic.config({
+    float = {
+        border = "rounded",
+        source = "if_many",
+        wrap = true,
+        max_width = 80,
+    },
+})
+
+vim.api.nvim_create_autocmd("CursorHold", {
+    group = augroup,
+    desc = "Show diagnostic under cursor",
+    callback = function()
+        vim.diagnostic.open_float({
+            scope = "cursor",
+            focusable = false,
+        })
+    end,
+})
+
 -- Format on save (ONLY real file buffers, ONLY when efm is attached)
 vim.api.nvim_create_autocmd("BufWritePre", {
     group = augroup,
