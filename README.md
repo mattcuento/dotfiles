@@ -13,6 +13,7 @@ root-level files) into place.
 | VCS        | **git** + **jujutsu (jj)** | `.gitconfig`, `.config/jj/config.toml` |
 | Editor     | **Neovim** (LazyVim)     | `.config/nvim/`                    |
 | Terminal   | **Ghostty**              | `.config/ghostty/`                 |
+| Keyboard   | **ZSA Voyager**          | [Oryx layout](https://configure.zsa.io/voyager/layouts/ZGdl5/latest/0) |
 | GitHub CLI | **gh**                   | `.config/gh/`                      |
 | AI skills  | **Claude + Codex**       | `.claude/skills/`, `.codex/skills/` |
 | Launcher   | **Raycast**              | Encrypted settings export (not tracked) |
@@ -227,6 +228,11 @@ Fira Code Mono, size 12, `copy-on-select`, `macos-option-as-alt`. Extra themes
 are listed as commented-out lines to switch between. Custom shaders live in
 `.config/ghostty/shaders/` and are included automatically by the directory
 symlink; the active shader is selected with `custom-shader` in `config`.
+
+### Keyboard
+
+The current keyboard is a **ZSA Voyager**. Its personalized keymap is published
+in [Oryx](https://configure.zsa.io/voyager/layouts/ZGdl5/latest/0).
 
 ### K9s (`.config/k9s/`)
 
