@@ -1,6 +1,10 @@
 vim.opt.termguicolors = true
 vim.o.background = "dark"
 
+-- Keep rust-analyzer for language intelligence, but delegate compiler and
+-- Clippy diagnostics to bacon-ls so unsaved buffers can be checked.
+vim.g.lazyvim_rust_diagnostics = "bacon-ls"
+
 -- ============================================================================
 -- OPTIONS
 -- ============================================================================
