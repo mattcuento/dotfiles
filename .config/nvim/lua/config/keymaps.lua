@@ -11,6 +11,14 @@ vim.keymap.set("i", "<C-c>", "<Esc>", { desc = "Exit insert mode" })
 vim.keymap.set("v", "<C-c>", "<Esc>", { desc = "Exit visual mode" })
 vim.keymap.set("c", "<C-c>", "<C-c>", { desc = "Clear command line" })
 
+vim.cmd("iabbrev todo TODO(cuento):")
+vim.cmd("iabbrev note NOTE(cuento):")
+vim.cmd("iabbrev perf PERF(cuento):")
+vim.cmd("iabbrev fixme FIXME(cuento):")
+vim.cmd("iabbrev hack HACK(cuento):")
+vim.cmd("iabbrev safety SAFETY(cuento):")
+vim.cmd("iabbrev invariant INVARIANT(cuento):")
+
 -- better movement in wrapped text
 vim.keymap.set("n", "j", function()
     return vim.v.count == 0 and "gj" or "j"
