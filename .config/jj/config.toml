@@ -72,3 +72,6 @@ editor = "nvim"
 merge-tool = "mergiraf"
 default-command = "log"
 merge-editor = "mergiraf"
+
+[remotes.origin]
+auto-track-bookmarks = "*"
